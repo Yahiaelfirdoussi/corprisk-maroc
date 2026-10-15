@@ -5,8 +5,10 @@ functions with read-only queries to your core banking system, data warehouse,
 the commercial register (OMPIC) extracts and your screening provider.
 """
 import csv
+import io
 import json
 import re
+from datetime import date
 from functools import lru_cache
 
 from .config import DATA_DIR
@@ -44,3 +46,27 @@ def get_transactions(company_id: str) -> list[dict]:
 @lru_cache
 def get_watchlists() -> dict:
     return json.loads((DATA_DIR / "watchlists.json").read_text(encoding="utf-8"))
+
+
+TXN_COLUMNS = ["date", "type", "amount_mad", "counterparty", "counterparty_country", "channel"]
+TXN_TYPES = {"wire_in", "wire_out", "cash_deposit", "cash_withdrawal"}
+
+
+def parse_transactions_csv(text: str, company_id: str) -> list[dict]:
+    """Validate an uploaded 12-month transaction history (see data/templates/transactions_template.csv)."""
+    reader = csv.DictReader(io.StringIO(text))
+    missing = [c for c in TXN_COLUMNS if c not in (reader.fieldnames or [])]
+    if missing:
+        raise ValueError(f"Missing column(s): {', '.join(missing)}. Expected: {', '.join(TXN_COLUMNS)}.")
+    rows = []
+    for n, r in enumerate(reader, start=2):
+        if r["type"] not in TXN_TYPES:
+            raise ValueError(f"Line {n}: type {r['type']!r} must be one of {', '.join(sorted(TXN_TYPES))}.")
+        try:
+            date.fromisoformat(r["date"])
+            amount = float(r["amount_mad"])
+        except ValueError:
+            raise ValueError(f"Line {n}: date must be YYYY-MM-DD and amount_mad a number.") from None
+        rows.append({**{c: r[c].strip() for c in TXN_COLUMNS}, "amount_mad": amount,
+                     "txn_id": r.get("txn_id") or f"U{n:06d}", "company_id": company_id})
+    return rows

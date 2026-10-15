@@ -1,10 +1,8 @@
 """Agent 7 - Risk scoring: transparent, rule-based score with a per-category breakdown."""
-from datetime import date
-
 from dateutil.relativedelta import relativedelta
 
-from ..config import AS_OF_DATE, CATEGORY_CAPS, RISK_LEVELS, SEVERITY_POINTS
-from ..state import DDState, log
+from ..config import CATEGORY_CAPS, RISK_LEVELS, SEVERITY_POINTS
+from ..state import DDState, analysis_date, log
 
 BLOCKING_CODES = {"SAN-MATCH", "KYC-UBO-UNKNOWN", "AML-JURISDICTION"}
 REVIEW_MONTHS = {"High": 12, "Medium": 24, "Low": 36}
@@ -37,7 +35,7 @@ def scoring_agent(state: DDState) -> dict:
         recommendation = "Standard due diligence; the file can follow the normal credit approval circuit."
         dd_level = "Standard (SDD)"
 
-    next_review = date.fromisoformat(AS_OF_DATE) + relativedelta(months=REVIEW_MONTHS[level])
+    next_review = analysis_date(state) + relativedelta(months=REVIEW_MONTHS[level])
     counts = {s: sum(1 for f in findings if f["severity"] == s) for s in ("critical", "high", "medium", "low")}
     risk = {
         "score": score, "level": level, "blocked": bool(blocking), "breakdown": breakdown,

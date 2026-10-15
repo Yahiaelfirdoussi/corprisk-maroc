@@ -140,49 +140,55 @@
   "human_decision": null,
   "audit_log": [
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "retriever",
-      "action": "loaded company file",
+      "action": "loaded company file (data store)",
       "detail": "Detroit Logistique SA: 2 financial years, 75 transactions, 7 documents"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
+      "agent": "document_check",
+      "action": "checked document completeness",
+      "detail": "4/8 required documents on file; missing: Attestation de régularité fiscale (tax certificate), Déclaration des bénéficiaires effectifs (UBO declaration), CNIE or passport of Hicham Tazi Lahlou, CNIE or passport of Laura Mendes"
+    },
+    {
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "financial",
       "action": "computed credit ratios",
       "detail": "D/E=3.36, CR=0.84, DSCR=1.08"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "kyc",
       "action": "analysed ownership and KYC file",
       "detail": "2 UBO(s) identified, 2 missing document(s)"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "screening",
       "action": "screened parties against watchlists",
       "detail": "11 parties screened, 0 hit(s)"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "transactions",
       "action": "ran AML scenarios",
       "detail": "75 transactions, 2 scenario(s) triggered"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "policy",
       "action": "retrieved governing policy sections",
       "detail": "8 finding(s) linked to 8 policy section(s)"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "scoring",
       "action": "computed risk score",
       "detail": "score=57, level=Medium, blocked=False"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "reporter",
       "action": "wrote report",
       "detail": "narrative source: template"

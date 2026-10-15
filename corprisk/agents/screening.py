@@ -2,12 +2,10 @@
 
 Screens the company, directors, shareholders, UBOs and transaction counterparties.
 """
-from datetime import date
-
-from ..config import AS_OF_DATE, PEP_LOOKBACK_YEARS, POTENTIAL_MATCH, PROBABLE_MATCH
+from ..config import PEP_LOOKBACK_YEARS, POTENTIAL_MATCH, PROBABLE_MATCH
 from ..data_access import get_watchlists
 from ..name_matching import similarity
-from ..state import DDState, log
+from ..state import DDState, analysis_date, log
 
 
 def _parties(company: dict, txns: list[dict]) -> list[tuple[str, str]]:
@@ -31,7 +29,7 @@ def screening_agent(state: DDState) -> dict:
     wl = get_watchlists()
     parties = _parties(state["company"], state["transactions"])
     findings, hits = [], 0
-    as_of = date.fromisoformat(AS_OF_DATE)
+    as_of = analysis_date(state)
 
     for name, role in parties:
         for entry in wl["sanctions"]:

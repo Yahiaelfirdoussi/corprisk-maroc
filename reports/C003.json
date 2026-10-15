@@ -129,7 +129,7 @@
       "code": "KYC-DOCS",
       "title": "Incomplete KYC / credit file",
       "severity": "high",
-      "evidence": "Missing: attestation_fiscale, bilan_2024, bilan_2025, declaration_ubo.",
+      "evidence": "Missing: attestation_fiscale, bilan_2025, declaration_ubo.",
       "policy_query": "identification legal entities statutes commercial register missing documents cannot be approved",
       "policy_doc": "POL-KYC-01",
       "action": "Request the missing documents before any decision.",
@@ -365,61 +365,67 @@
   },
   "audit_log": [
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "retriever",
-      "action": "loaded company file",
+      "action": "loaded company file (data store)",
       "detail": "Sahara Trading & Services SARL: 1 financial years, 103 transactions, 3 documents"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
+      "agent": "document_check",
+      "action": "checked document completeness",
+      "detail": "2/7 required documents on file; missing: Attestation de régularité fiscale (tax certificate), Bilan 2025 (financial statements), Déclaration des bénéficiaires effectifs (UBO declaration), CNIE or passport of Rachid Ouazzani Kettani, Shareholder register of Bluewater Global Ventures Ltd"
+    },
+    {
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "financial",
       "action": "computed credit ratios",
       "detail": "D/E=4.64, CR=1.08, DSCR=2.33"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "kyc",
       "action": "analysed ownership and KYC file",
-      "detail": "0 UBO(s) identified, 4 missing document(s)"
+      "detail": "0 UBO(s) identified, 3 missing document(s)"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "screening",
       "action": "screened parties against watchlists",
       "detail": "5 parties screened, 2 hit(s)"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "transactions",
       "action": "ran AML scenarios",
       "detail": "103 transactions, 6 scenario(s) triggered"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "policy",
       "action": "retrieved governing policy sections",
       "detail": "16 finding(s) linked to 16 policy section(s)"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "scoring",
       "action": "computed risk score",
       "detail": "score=100, level=High, blocked=True"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "escalation",
       "action": "prepared compliance escalation",
       "detail": "16 action(s); approvals: Compliance Officer, Credit Committee, Senior management (PEP relationship); STR assessment: True"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "human_review",
       "action": "reviewer decision recorded",
       "detail": "PENDING by not recorded"
     },
     {
-      "ts": "2026-10-14T13:47:31+00:00",
+      "ts": "2026-10-15T20:18:44+00:00",
       "agent": "reporter",
       "action": "wrote report",
       "detail": "narrative source: template"

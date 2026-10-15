@@ -11,5 +11,15 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
-      - key: LLM_PROVIDER        # "none" = template narrative, no API key needed
+      - key: LLM_PROVIDER        # "none" = template narrative; "anthropic" = Claude writes it
         value: none
+      - key: EXTRACTION_PROVIDER # who reads uploaded documents: openai | anthropic
+        value: openai
+      - key: EXTRACTION_MODEL    # reads first (cheapest)
+        value: gpt-6-luna
+      - key: EXTRACTION_FALLBACK_MODEL   # re-reads when the first read fails or looks incomplete
+        value: gpt-6.1-sol
+      - key: OPENAI_API_KEY      # needed to read uploaded documents; Render asks for it on setup
+        sync: false
+      - key: APP_PASSWORD        # protects the upload mode (it spends API credits); strongly advised
+        sync: false

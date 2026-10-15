@@ -1,0 +1,5 @@
+date,type,amount_mad,counterparty,counterparty_country,channel
+2026-01-05,wire_in,1250000,Client Example SAS,FR,SWIFT
+2026-01-08,wire_out,640000,Fournisseur Example SARL,MA,Virement national
+2026-01-12,cash_deposit,45000,Dépôt espèces,MA,Agence Centre
+2026-01-20,cash_withdrawal,30000,Caisse - salaires,MA,Agence Centre

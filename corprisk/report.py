@@ -51,13 +51,13 @@ def render_markdown(state: dict) -> str:
         "Identified beneficial owners (>= 25%): " + (", ".join(f"{u['name']} ({u['effective_pct']:.0f}%)" for u in m.get("ubos", [])) or "**none**"),
         "",
         "## 5. Key financials",
-        f"Year {fr.get('year')}: revenue {_mad(fr.get('revenue', 0))}, debt/equity {fr.get('debt_to_equity')}, "
-        f"current ratio {fr.get('current_ratio')}, DSCR {fr.get('dscr')}, net margin {fr.get('net_margin', 0):.1%}, "
-        f"request/revenue {fr.get('exposure_to_revenue', 0):.0%}.",
+        f"Year {fr.get('year')}: revenue {_mad((fr.get('revenue') or 0))}, debt/equity {fr.get('debt_to_equity')}, "
+        f"current ratio {fr.get('current_ratio')}, DSCR {fr.get('dscr')}, net margin {(fr.get('net_margin') or 0):.1%}, "
+        f"request/revenue {(fr.get('exposure_to_revenue') or 0):.0%}.",
         "",
         "## 6. Transaction profile (12 months)",
-        f"{tx.get('count')} transactions; credits {_mad(tx.get('total_credits', 0))}; cash deposits {_mad(tx.get('cash_deposits', 0))} "
-        f"({tx.get('cash_ratio', 0):.0%} of revenue); near-threshold deposits: {tx.get('near_threshold_deposits')}; "
+        f"{tx.get('count')} transactions; credits {_mad((tx.get('total_credits') or 0))}; cash deposits {_mad((tx.get('cash_deposits') or 0))} "
+        f"({(tx.get('cash_ratio') or 0):.0%} of revenue); near-threshold deposits: {tx.get('near_threshold_deposits')}; "
         f"pass-through events: {tx.get('pass_through_events')}.",
     ]
     esc = state.get("escalation")
@@ -160,10 +160,10 @@ table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;padding:8px 6
 <div>{_narrative_html(state.get('narrative', ''))}</div></section>
 <div class="grid"><section class="card"><h2>Score breakdown</h2>{bars}</section>
 <section class="card"><h2>Key figures</h2><table>
-<tr><td>Revenue {e(str(fr.get('year')))}</td><td class="num">{_mad(fr.get('revenue', 0))}</td></tr>
+<tr><td>Revenue {e(str(fr.get('year')))}</td><td class="num">{_mad((fr.get('revenue') or 0))}</td></tr>
 <tr><td>Debt / equity</td><td class="num">{fr.get('debt_to_equity')}</td></tr><tr><td>Current ratio</td><td class="num">{fr.get('current_ratio')}</td></tr>
-<tr><td>DSCR</td><td class="num">{fr.get('dscr')}</td></tr><tr><td>Request / revenue</td><td class="num">{fr.get('exposure_to_revenue', 0):.0%}</td></tr>
-<tr><td>Cash deposits / revenue</td><td class="num">{tx.get('cash_ratio', 0):.0%}</td></tr><tr><td>Credits / revenue</td><td class="num">{tx.get('turnover_ratio', 0):.0%}</td></tr>
+<tr><td>DSCR</td><td class="num">{fr.get('dscr')}</td></tr><tr><td>Request / revenue</td><td class="num">{(fr.get('exposure_to_revenue') or 0):.0%}</td></tr>
+<tr><td>Cash deposits / revenue</td><td class="num">{(tx.get('cash_ratio') or 0):.0%}</td></tr><tr><td>Credits / revenue</td><td class="num">{(tx.get('turnover_ratio') or 0):.0%}</td></tr>
 </table></section></div>
 {esc_html}
 <section class="card"><h2>Findings ({len(state.get('assessed_findings', []))})</h2><div class="scroll"><table><tr><th>Severity</th><th>Finding &amp; evidence</th><th>Policy</th><th>Action</th></tr>{findings_rows}</table></div>

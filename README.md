@@ -1,8 +1,9 @@
 # CorpRisk Maroc — Multi-agent corporate due diligence (LangGraph)
 
 A working prototype of an agentic KYC / AML / credit due diligence system for a Moroccan bank,
-inspired by CorpRisk-AI. Nine agents collaborate in a LangGraph workflow to review a corporate
-customer file and produce an auditable risk report with policy references.
+inspired by CorpRisk-AI. Upload a company's documents (or pick a demo file): an LLM reads them,
+a document gate stops the pipeline if anything required is missing, then ten agents collaborate in a
+LangGraph workflow to produce an auditable risk report with policy references.
 
 > **All data is fictitious** (companies, people, ICE/RC numbers, watchlists, policies).
 > The policies are mock documents written in the spirit of law 43-05 and Bank Al-Maghrib vigilance
@@ -17,15 +18,42 @@ python run.py --list               # the 4 demo companies
 python run.py --all                # writes reports/C00X.html / .md / .json
 python run.py C003 --interactive   # pauses for your decision at human review
 streamlit run app.py               # web interface
+pip install -r requirements-dev.txt && pytest -q   # tests (no API key needed)
 ```
 
-Runs fully offline. No API key is needed (an LLM is optional, see below).
+The demo mode runs fully offline. Reading uploaded documents needs `OPENAI_API_KEY` or `ANTHROPIC_API_KEY`.
+
+## Analyse your own customer file
+
+In the web interface choose **Analyse a customer file**:
+
+1. **Upload** the company's documents (PDF or photos, scans accepted): statuts, modèle J, bilans,
+   attestation fiscale, CNIE/passports, UBO declaration… plus the credit request and, optionally,
+   the 12-month transaction history (CSV, template provided).
+2. **An LLM reads them** in one call (`corprisk/extraction.py`, structured outputs): it classifies each
+   file and extracts the company profile, directors, shareholders, beneficial owners and financials.
+   A cheap model reads first (about $0.01 per file); if it fails, declines, or returns an incomplete
+   result (no company name, a file left unclassified), a stronger model re-reads the file (about $0.20).
+   Works with **OpenAI** (`gpt-6-luna` → `gpt-6.1-sol`, needs `OPENAI_API_KEY`) or **Anthropic**
+   (`claude-haiku-5-5` → `claude-sonnet-5-5`, needs `ANTHROPIC_API_KEY`). Choose with
+   `EXTRACTION_PROVIDER`; override models with `EXTRACTION_MODEL` / `EXTRACTION_FALLBACK_MODEL`.
+3. **You review** everything in editable tables. The agents use the reviewed data, not the raw PDFs.
+4. **Document gate.** The required documents are derived from the file itself (`corprisk/documents.py`):
+   always statuts, modèle J, tax certificate and an ID for every director; two years of bilans above
+   5M MAD; a UBO declaration when a shareholder is a company or a UBO is non-resident; the shareholder
+   register of any offshore shareholder. **If anything is missing the pipeline stops** and lists each
+   document with the reason and the policy section that requires it (downloadable as a request list).
+5. Otherwise the agents run and you get the score, report and, for high risk, the human review step.
+
+Documents are sent to the provider's API (OpenAI or Anthropic). Use fictitious data for demos; for real customer data check
+Compliance / CNDP requirements (law 09-08) first.
 
 ## The agents
 
 | # | Agent | What it does | File |
 |---|---|---|---|
 | 1 | Data retriever | Loads company profile, financials, shareholders, 12 months of transactions | `agents/retriever.py` |
+| 1b | Document gate | Checks the file is complete; stops the pipeline for uploaded files with missing documents | `agents/document_check.py`, `documents.py` |
 | 2 | Screening | Fuzzy-matches company, directors, shareholders, UBOs and counterparties against sanctions, PEP, internal blacklist, adverse media | `agents/screening.py` |
 | 3 | KYC & ownership | Identifies UBOs (≥25%, look-through), offshore structures, company age, sector risk, missing documents | `agents/kyc_ownership.py` |
 | 4 | Financial analysis | Debt/equity, current ratio, DSCR, margins, growth, exposure vs revenue | `agents/financial.py` |
@@ -36,7 +64,9 @@ Runs fully offline. No API key is needed (an LLM is optional, see below).
 | 9 | Report writer | Narrative (template or LLM) + HTML/Markdown/JSON report with audit trail | `agents/reporter.py`, `report.py` |
 
 ```
-START → retriever → ┬ screening    ┐
+START → retriever → document gate ─ incomplete? → STOP (list of documents to request)
+                    │
+                    ┬ screening    ┐
                     ├ kyc          ├→ policy (RAG) → scoring ─ High? ─yes→ escalation → human_review ⏸ → report → END
                     ├ financial    │                           └─no──────────────────────────────────→ report
                     └ transactions ┘   (agents 2–5 run in parallel)
@@ -79,8 +109,11 @@ Compliance / CNDP requirements (law 09-08) and prefer an on-premise model or an 
 ## Deploy
 
 **Render:** New → Blueprint → pick this repo. `render.yaml` sets up a free web service running the
-Streamlit app (health check `/_stcore/health`). To enable the LLM narrative, set `LLM_PROVIDER`,
-`ANTHROPIC_API_KEY` (or `OPENAI_*`) in the Render dashboard, and add the SDK to `requirements.txt`.
+Streamlit app (health check `/_stcore/health`). Render asks for two secrets:
+`OPENAI_API_KEY` (reads uploaded documents) and `APP_PASSWORD` (protects the upload mode, since it
+spends API credits and the URL is public). To use Claude instead, set `EXTRACTION_PROVIDER=anthropic`,
+clear the two model variables and add `ANTHROPIC_API_KEY`. Set `LLM_PROVIDER=anthropic` (or `openai` + `LLM_MODEL`) to also have an LLM write the
+report narrative.
 
 **Railway:** New Project → Deploy from GitHub repo; the `Procfile` provides the start command.
 

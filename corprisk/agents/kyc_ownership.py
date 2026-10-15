@@ -1,15 +1,16 @@
 """Agent 3 - KYC & ownership: UBO identification, offshore structures, documents."""
 from datetime import date
 
-from ..config import (AS_OF_DATE, HIGH_SECRECY, LARGE_REQUEST_MAD, NEW_COMPANY_MONTHS,
-                      SECTOR_RISK, UBO_THRESHOLD_PCT)
-from ..state import DDState, log
+from ..config import (HIGH_SECRECY, LARGE_REQUEST_MAD, NEW_COMPANY_MONTHS, SECTOR_RISK,
+                      UBO_THRESHOLD_PCT)
+from ..documents import missing_documents
+from ..state import DDState, analysis_date, log
 
 
 def kyc_agent(state: DDState) -> dict:
     c = state["company"]
     findings, ubos = [], []
-    as_of = date.fromisoformat(AS_OF_DATE)
+    as_of = analysis_date(state)
 
     # --- beneficial owners -------------------------------------------------
     for s in c.get("shareholders", []):
@@ -56,9 +57,21 @@ def kyc_agent(state: DDState) -> dict:
             })
 
     # --- company age -------------------------------------------------------
-    inc = date.fromisoformat(c["incorporation_date"])
-    age_months = (as_of.year - inc.year) * 12 + as_of.month - inc.month
-    if age_months < NEW_COMPANY_MONTHS:
+    age_months = None
+    if not c.get("incorporation_date"):
+        findings.append({
+            "agent": "kyc", "category": "kyc", "code": "KYC-NO-INC-DATE",
+            "title": "Incorporation date not established",
+            "severity": "medium",
+            "evidence": "The incorporation date was not found in the documents provided.",
+            "policy_query": "identification legal entities statutes commercial register",
+            "policy_doc": "POL-KYC-01",
+            "action": "Confirm the incorporation date from the commercial register (modèle J).",
+        })
+    else:
+        inc = date.fromisoformat(c["incorporation_date"])
+        age_months = (as_of.year - inc.year) * 12 + as_of.month - inc.month
+    if age_months is not None and age_months < NEW_COMPANY_MONTHS:
         sev = "high" if c["requested_amount_mad"] > LARGE_REQUEST_MAD else "medium"
         findings.append({
             "agent": "kyc", "category": "inherent", "code": "KYC-NEW-COMPANY",
@@ -85,12 +98,7 @@ def kyc_agent(state: DDState) -> dict:
         })
 
     # --- document completeness ---------------------------------------------
-    required = ["statuts", "modele_J", "attestation_fiscale"]
-    if c["requested_amount_mad"] > LARGE_REQUEST_MAD:
-        required += ["bilan_2024", "bilan_2025"]
-    if any(s["type"] == "company" for s in c.get("shareholders", [])) or any(u["country"] != "MA" for u in ubos):
-        required.append("declaration_ubo")
-    missing = [d for d in required if d not in c.get("documents_on_file", [])]
+    missing = [r.code for r in missing_documents(c, as_of, strict=False)]
     if missing:
         findings.append({
             "agent": "kyc", "category": "kyc", "code": "KYC-DOCS",

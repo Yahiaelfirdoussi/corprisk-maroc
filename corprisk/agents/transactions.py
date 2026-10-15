@@ -20,8 +20,13 @@ def transaction_agent(state: DDState) -> dict:
     txns = [{**t, "_d": date.fromisoformat(t["date"])} for t in state["transactions"]]
     c = state["company"]
     fin = c.get("financials", {})
-    revenue = fin[max(fin)]["revenue"] if fin else 0
+    revenue = (fin[max(fin)].get("revenue") or 0) if fin else 0
     findings = []
+    if not txns:
+        findings.append(_f("AML-NO-DATA", "No transaction history provided", "info",
+                           "Transaction monitoring scenarios could not be run.",
+                           "turnover consistency total account credits 12 months",
+                           "Load the 12-month account history and re-run the analysis."))
     cash_in = [t for t in txns if t["type"] == "cash_deposit"]
     wires_in = [t for t in txns if t["type"] == "wire_in"]
     wires_out = [t for t in txns if t["type"] == "wire_out"]
