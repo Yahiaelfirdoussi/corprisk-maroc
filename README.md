@@ -17,7 +17,7 @@ pip install -r requirements.txt
 python run.py --list               # the 4 demo companies
 python run.py --all                # writes reports/C00X.html / .md / .json
 python run.py C003 --interactive   # pauses for your decision at human review
-streamlit run app.py               # web interface
+uvicorn web.server:app --reload   # web interface + API on http://localhost:8000 (docs at /docs)
 pip install -r requirements-dev.txt && pytest -q   # tests (no API key needed)
 ```
 
@@ -25,7 +25,7 @@ The demo mode runs fully offline. Reading uploaded documents needs `OPENAI_API_K
 
 ## Analyse your own customer file
 
-In the web interface choose **Analyse a customer file**:
+In the web interface (tab **New analysis**):
 
 1. **Upload** the company's documents (PDF or photos, scans accepted): statuts, modèle J, bilans,
    attestation fiscale, CNIE/passports, UBO declaration… plus the credit request and, optionally,
@@ -109,7 +109,7 @@ Compliance / CNDP requirements (law 09-08) and prefer an on-premise model or an 
 ## Deploy
 
 **Render:** New → Blueprint → pick this repo. `render.yaml` sets up a free web service running the
-Streamlit app (health check `/_stcore/health`). Render asks for two secrets:
+web app (`uvicorn web.server:app`, health check `/api/health`). Render asks for two secrets:
 `OPENAI_API_KEY` (reads uploaded documents) and `APP_PASSWORD` (protects the upload mode, since it
 spends API credits and the URL is public). To use Claude instead, set `EXTRACTION_PROVIDER=anthropic`,
 clear the two model variables and add `ANTHROPIC_API_KEY`. Set `LLM_PROVIDER=anthropic` (or `openai` + `LLM_MODEL`) to also have an LLM write the
@@ -133,10 +133,14 @@ Note: the free tier sleeps when idle, so the first request after a pause takes ~
 
 ```
 corprisk_maroc/
-├── run.py · app.py · generate_data.py · requirements.txt
-├── data/          companies.json, transactions.csv, watchlists.json   (fictitious)
+├── run.py · generate_data.py · generate_samples.py · requirements.txt
+├── web/           server.py (FastAPI) + static/ (index.html, app.js, styles.css)
+├── data/          companies.json, transactions.csv, watchlists.json, templates/   (fictitious)
 ├── policies/      POL-KYC-01, POL-AML-02, POL-SAN-03, POL-CRD-04       (mock)
-├── corprisk/      config, state, graph, data_access, name_matching, policy_rag, llm, report
-│   └── agents/    retriever, screening, kyc_ownership, financial, transactions, policy, scoring, escalation, reporter
+├── corprisk/      config, state, graph, documents, extraction, data_access, name_matching, policy_rag, llm, report
+│   └── agents/    retriever, document_check, screening, kyc_ownership, financial, transactions, policy, scoring,
+│                  escalation, reporter
+├── sample_files/  three fictitious customer files to upload
+├── tests/         pytest (no API key needed)
 └── reports/       generated reports
 ```

@@ -1,8 +1,9 @@
 # Pinned to the versions the app was tested with (Python 3.11).
 langgraph==1.2.15
 scikit-learn==1.9.1
-pandas==3.0.6
 python-dateutil==2.9.0.post0
-streamlit==1.66.0
+fastapi==0.143.2
+uvicorn==0.54.0
+python-multipart==0.0.32   # file uploads
 openai==3.31.0        # reads uploaded documents (EXTRACTION_PROVIDER=openai); LLM_PROVIDER=openai
 anthropic==1.15.0     # reads uploaded documents (EXTRACTION_PROVIDER=anthropic); LLM_PROVIDER=anthropic

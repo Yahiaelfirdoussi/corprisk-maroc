@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CorpRisk Maroc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">CR</div>
+        <div>CorpRisk Maroc<small>Corporate due diligence agents</small></div>
+      </div>
+      <nav class="nav" aria-label="Mode">
+        <button data-view="new" class="active">New analysis</button>
+        <button data-view="demo">Demo files</button>
+      </nav>
+      <div class="status" id="status"></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================== NEW ANALYSIS ======================== -->
+    <section id="view-new">
+      <div class="page-head">
+        <div>
+          <h1>Analyse a customer file</h1>
+          <div class="muted">Upload the company's documents. The AI reads them, you check the data, the agents assess the risk.</div>
+        </div>
+      </div>
+      <div class="stepper" id="stepper">
+        <div class="step" data-step="1"><span class="num">1</span>Upload</div>
+        <div class="step" data-step="2"><span class="num">2</span>Review data</div>
+        <div class="step" data-step="3"><span class="num">3</span>Result</div>
+      </div>
+
+      <!-- step 1 -->
+      <div id="step-1">
+        <div class="grid-2">
+          <div class="card">
+            <h2>Company documents</h2>
+            <div class="dropzone" id="drop-docs" tabindex="0" role="button" aria-label="Add documents">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 16V4m0 0-4 4m4-4 4 4"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+              <div class="big">Drop files here or click to browse</div>
+              <div class="muted small">PDF, PNG or JPG · scans accepted · up to 30 MB in total</div>
+            </div>
+            <input type="file" id="input-docs" multiple accept=".pdf,.png,.jpg,.jpeg" class="hidden">
+            <ul class="file-list" id="doc-list"></ul>
+            <div class="checklist-hint">
+              <span class="chip">Statuts</span><span class="chip">Modèle J</span><span class="chip">Attestation fiscale</span>
+              <span class="chip">Bilans</span><span class="chip">CNIE / passports</span><span class="chip">UBO declaration</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h2>Credit request</h2>
+              <div class="grid-2" style="gap:12px">
+                <label class="field">Product
+                  <input type="text" id="product" value="Medium-term equipment loan">
+                </label>
+                <label class="field">Amount (MAD)
+                  <input type="text" id="amount" inputmode="numeric" value="5 000 000">
+                </label>
+              </div>
+            </div>
+            <div class="card">
+              <h2>Transaction history <span class="muted small">(optional)</span></h2>
+              <div class="dropzone" id="drop-csv" tabindex="0" role="button" aria-label="Add transaction CSV" style="padding:18px">
+                <div class="big" style="font-size:15px">12-month account history (CSV)</div>
+                <div class="muted small">Without it, transaction monitoring is skipped.</div>
+              </div>
+              <input type="file" id="input-csv" accept=".csv" class="hidden">
+              <ul class="file-list" id="csv-list"></ul>
+              <div class="small" style="margin-top:10px"><a href="/api/template.csv">Download the CSV template</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="banner info small" id="privacy-note">Documents are sent to the AI provider's API for reading. Use fictitious or approved data only (CNDP / law 09-08).</div>
+        <div class="actions">
+          <button class="btn primary" id="btn-extract" disabled>Read documents →</button>
+        </div>
+      </div>
+
+      <!-- step 2 -->
+      <div id="step-2" class="hidden"></div>
+
+      <!-- step 3 -->
+      <div id="step-3" class="hidden"></div>
+    </section>
+
+    <!-- ======================== DEMO ======================== -->
+    <section id="view-demo" class="hidden">
+      <div class="page-head">
+        <div>
+          <h1>Demo files</h1>
+          <div class="muted">Four fictitious customer files already on record. Runs offline, no AI credits used.</div>
+        </div>
+      </div>
+      <div class="demo-grid" id="demo-grid"></div>
+      <div id="demo-result" style="margin-top:22px"></div>
+    </section>
+  </main>
+
+  <footer>Prototype · decision support only — final decisions belong to authorised bank staff. Fictitious data in demo files.</footer>
+
+  <div class="overlay hidden" id="busy">
+    <div class="overlay-box">
+      <div class="spinner"></div>
+      <div id="busy-text" style="font-weight:700">Working…</div>
+      <div class="muted small" id="busy-sub"></div>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="pw-modal">
+    <form class="overlay-box" id="pw-form" style="text-align:left">
+      <h2>Password required</h2>
+      <p class="muted small">Analysing uploaded files uses paid AI credits, so this mode is protected.</p>
+      <label class="field">Password <input type="password" id="pw-input" autocomplete="current-password"></label>
+      <div class="actions"><button type="button" class="btn" id="pw-cancel">Cancel</button><button class="btn primary">Continue</button></div>
+    </form>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

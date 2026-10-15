@@ -1,0 +1,83 @@
+date,type,amount_mad,counterparty,counterparty_country,channel
+2025-10-02,wire_in,1000000,Coral Bay Holdings Ltd,VG,SWIFT
+2025-10-03,wire_out,943845.85,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2025-10-17,cash_deposit,95511.17,Dépôt espèces,MA,Agence Maarif
+2025-10-18,cash_deposit,91524.92,Dépôt espèces,MA,Agence Anfa
+2025-10-25,wire_in,639098.11,Client Casablanca Fictif,MA,Virement national
+2025-10-26,cash_deposit,97600.17,Dépôt espèces,MA,Agence Anfa
+2025-11-09,cash_deposit,94844.94,Dépôt espèces,MA,Agence Anfa
+2025-11-09,wire_in,969113.69,Client Casablanca Fictif,MA,Virement national
+2025-11-15,cash_deposit,93767.72,Dépôt espèces,MA,Agence Anfa
+2025-11-16,wire_in,2000000,Coral Bay Holdings Ltd,VG,SWIFT
+2025-11-17,wire_out,1929921.79,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2025-11-18,cash_deposit,91236.86,Dépôt espèces,MA,Agence Derb Omar
+2025-11-20,cash_deposit,95353.37,Dépôt espèces,MA,Agence Anfa
+2025-12-03,cash_deposit,96704.82,Dépôt espèces,MA,Agence Maarif
+2025-12-03,wire_in,1000000,Coral Bay Holdings Ltd,VG,SWIFT
+2025-12-04,cash_deposit,94335.1,Dépôt espèces,MA,Agence Maarif
+2025-12-05,wire_out,969196.8,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2025-12-25,wire_in,661778.65,Client Casablanca Fictif,MA,Virement national
+2025-12-27,cash_deposit,94803.99,Dépôt espèces,MA,Agence Maarif
+2026-01-07,wire_in,742645.92,Client Casablanca Fictif,MA,Virement national
+2026-01-08,cash_deposit,97346.8,Dépôt espèces,MA,Agence Derb Omar
+2026-01-09,cash_deposit,98504.08,Dépôt espèces,MA,Agence Maarif
+2026-01-13,cash_deposit,98521.93,Dépôt espèces,MA,Agence Derb Omar
+2026-01-21,cash_deposit,96612.18,Dépôt espèces,MA,Agence Derb Omar
+2026-01-22,cash_deposit,98075.78,Dépôt espèces,MA,Agence Derb Omar
+2026-01-23,wire_in,1500000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-01-25,wire_out,1420433.71,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-02-01,cash_deposit,94266.93,Dépôt espèces,MA,Agence Anfa
+2026-02-18,cash_deposit,94898.7,Dépôt espèces,MA,Agence Anfa
+2026-02-20,wire_in,1500000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-02-21,wire_out,1403463.75,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-02-24,cash_deposit,94110.6,Dépôt espèces,MA,Agence Maarif
+2026-02-26,wire_in,691421.54,Client Casablanca Fictif,MA,Virement national
+2026-03-03,cash_deposit,93257.3,Dépôt espèces,MA,Agence Derb Omar
+2026-03-09,wire_in,1500000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-03-10,wire_out,1435244.92,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-03-17,wire_in,828237.97,Client Casablanca Fictif,MA,Virement national
+2026-03-25,cash_deposit,92543.19,Dépôt espèces,MA,Agence Derb Omar
+2026-03-27,cash_deposit,94589.16,Dépôt espèces,MA,Agence Anfa
+2026-04-03,cash_deposit,93285.85,Dépôt espèces,MA,Agence Derb Omar
+2026-04-03,cash_deposit,96169.51,Dépôt espèces,MA,Agence Derb Omar
+2026-04-03,wire_in,1500000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-04-04,wire_out,1429033.01,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-04-11,cash_deposit,91760.43,Dépôt espèces,MA,Agence Derb Omar
+2026-04-11,wire_in,997722.36,Client Casablanca Fictif,MA,Virement national
+2026-04-21,cash_deposit,91752.81,Dépôt espèces,MA,Agence Maarif
+2026-04-26,cash_deposit,96849.75,Dépôt espèces,MA,Agence Maarif
+2026-05-06,cash_deposit,93226.11,Dépôt espèces,MA,Agence Derb Omar
+2026-05-07,cash_deposit,98924.1,Dépôt espèces,MA,Agence Anfa
+2026-05-09,cash_deposit,96284.48,Dépôt espèces,MA,Agence Derb Omar
+2026-05-10,wire_in,2000000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-05-11,wire_out,1888996.08,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-05-14,wire_out,1800000,Golden Crescent Shipping LLC,AE,SWIFT
+2026-05-17,cash_deposit,97031.06,Dépôt espèces,MA,Agence Derb Omar
+2026-05-17,wire_in,868862.88,Client Casablanca Fictif,MA,Virement national
+2026-06-02,cash_deposit,91130.44,Dépôt espèces,MA,Agence Anfa
+2026-06-04,wire_in,2000000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-06-06,wire_out,1925650.94,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-06-12,cash_deposit,97831.27,Dépôt espèces,MA,Agence Maarif
+2026-06-17,cash_deposit,95683.92,Dépôt espèces,MA,Agence Derb Omar
+2026-06-17,cash_deposit,95035.47,Dépôt espèces,MA,Agence Maarif
+2026-06-18,wire_in,933845.57,Client Casablanca Fictif,MA,Virement national
+2026-07-01,wire_in,1000000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-07-02,wire_in,633793.95,Client Casablanca Fictif,MA,Virement national
+2026-07-03,wire_out,951537.04,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-07-08,cash_deposit,93912.99,Dépôt espèces,MA,Agence Anfa
+2026-07-12,cash_deposit,99346.0,Dépôt espèces,MA,Agence Derb Omar
+2026-07-17,cash_deposit,93616.16,Dépôt espèces,MA,Agence Derb Omar
+2026-07-24,cash_deposit,96405.8,Dépôt espèces,MA,Agence Maarif
+2026-08-02,cash_deposit,94905.35,Dépôt espèces,MA,Agence Derb Omar
+2026-08-09,cash_deposit,94789.51,Dépôt espèces,MA,Agence Maarif
+2026-08-10,wire_in,687146.34,Client Casablanca Fictif,MA,Virement national
+2026-08-12,wire_in,1500000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-08-14,wire_out,1413333.49,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-08-20,cash_deposit,93058.81,Dépôt espèces,MA,Agence Maarif
+2026-08-28,cash_deposit,95300.51,Dépôt espèces,MA,Agence Maarif
+2026-09-01,cash_deposit,93850.33,Dépôt espèces,MA,Agence Derb Omar
+2026-09-03,wire_in,1500000,Coral Bay Holdings Ltd,VG,SWIFT
+2026-09-04,wire_out,1405789.89,Dubai Bright Trading FZE (fictif),AE,SWIFT
+2026-09-07,cash_deposit,93109.52,Dépôt espèces,MA,Agence Derb Omar
+2026-09-16,cash_deposit,93370.9,Dépôt espèces,MA,Agence Anfa
+2026-09-19,wire_in,616666.78,Client Casablanca Fictif,MA,Virement national
