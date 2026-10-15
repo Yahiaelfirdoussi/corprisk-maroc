@@ -1,0 +1,108 @@
+{
+  "_note": "FICTITIOUS DATA for demonstration only. All companies, people, ICE and RC numbers are invented.",
+  "companies": [
+    {
+      "company_id": "C001",
+      "name": "Atlas Agro Export SARL",
+      "legal_form": "SARL",
+      "ice": "001234567000011",
+      "rc": "RC Agadir 45123",
+      "city": "Agadir",
+      "sector": "agriculture_export",
+      "sector_label": "Agricultural products export (citrus, tomatoes)",
+      "incorporation_date": "2009-03-17",
+      "customer_since": "2011-06-01",
+      "requested_product": "Export pre-financing credit line - 8,000,000 MAD",
+      "directors": [
+        {"name": "Youssef Amrani", "role": "Gérant", "nationality": "MA"}
+      ],
+      "shareholders": [
+        {"name": "Youssef Amrani", "type": "person", "country": "MA", "pct": 60},
+        {"name": "Nadia Amrani", "type": "person", "country": "MA", "pct": 40}
+      ],
+      "financials": {
+        "2024": {"revenue": 62000000, "ebitda": 9100000, "net_income": 4800000, "total_assets": 54000000, "total_liabilities": 26000000, "equity": 28000000, "current_assets": 31000000, "current_liabilities": 17500000, "annual_debt_service": 3900000},
+        "2025": {"revenue": 68500000, "ebitda": 10200000, "net_income": 5600000, "total_assets": 59000000, "total_liabilities": 27500000, "equity": 31500000, "current_assets": 34500000, "current_liabilities": 18200000, "annual_debt_service": 4100000}
+      },
+      "documents_on_file": ["statuts", "modele_J", "bilan_2024", "bilan_2025", "cnie_gerant", "attestation_fiscale"]
+    },
+    {
+      "company_id": "C002",
+      "name": "Detroit Logistique SA",
+      "legal_form": "SA",
+      "ice": "002345678000022",
+      "rc": "RC Tanger 98765",
+      "city": "Tanger",
+      "sector": "logistics",
+      "sector_label": "Freight forwarding and warehousing (Tanger Med zone)",
+      "incorporation_date": "2016-09-05",
+      "customer_since": "2019-02-14",
+      "requested_product": "Medium-term equipment loan - 15,000,000 MAD",
+      "directors": [
+        {"name": "Hicham Tazi Lahlou", "role": "Président du Conseil", "nationality": "MA"},
+        {"name": "Laura Mendes", "role": "Directrice Générale", "nationality": "PT"}
+      ],
+      "shareholders": [
+        {"name": "Hicham Tazi Lahlou", "type": "person", "country": "MA", "pct": 45},
+        {"name": "Iberia Freight Holdings SL", "type": "company", "country": "ES", "pct": 35,
+         "ubos": [{"name": "Laura Mendes", "country": "PT", "pct_of_entity": 100}]},
+        {"name": "Divers actionnaires", "type": "other", "country": "MA", "pct": 20}
+      ],
+      "financials": {
+        "2024": {"revenue": 41000000, "ebitda": 6100000, "net_income": 1500000, "total_assets": 52000000, "total_liabilities": 38500000, "equity": 13500000, "current_assets": 14800000, "current_liabilities": 16200000, "annual_debt_service": 5200000},
+        "2025": {"revenue": 47500000, "ebitda": 6400000, "net_income": 1100000, "total_assets": 61000000, "total_liabilities": 47000000, "equity": 14000000, "current_assets": 15100000, "current_liabilities": 17900000, "annual_debt_service": 5900000}
+      },
+      "documents_on_file": ["statuts", "modele_J", "bilan_2024", "bilan_2025", "cnie_president", "passeport_dg", "pv_conseil"]
+    },
+    {
+      "company_id": "C003",
+      "name": "Sahara Trading & Services SARL",
+      "legal_form": "SARL",
+      "ice": "003456789000033",
+      "rc": "RC Casablanca 512340",
+      "city": "Casablanca",
+      "sector": "general_trading",
+      "sector_label": "General import/export trading (electronics, textiles)",
+      "incorporation_date": "2024-11-20",
+      "customer_since": "2025-01-08",
+      "requested_product": "Short-term trade finance line - 20,000,000 MAD",
+      "directors": [
+        {"name": "Rachid Ouazzani Kettani", "role": "Gérant", "nationality": "MA"}
+      ],
+      "shareholders": [
+        {"name": "Rachid Ouazzani Kettani", "type": "person", "country": "MA", "pct": 10},
+        {"name": "Bluewater Global Ventures Ltd", "type": "company", "country": "VG", "pct": 90,
+         "ubos": []}
+      ],
+      "financials": {
+        "2025": {"revenue": 9500000, "ebitda": 700000, "net_income": 250000, "total_assets": 6200000, "total_liabilities": 5100000, "equity": 1100000, "current_assets": 5300000, "current_liabilities": 4900000, "annual_debt_service": 300000}
+      },
+      "documents_on_file": ["statuts", "modele_J", "cnie_gerant"]
+    },
+    {
+      "company_id": "C004",
+      "name": "Menara Prestige Immobilier SARL",
+      "legal_form": "SARL",
+      "ice": "004567890000044",
+      "rc": "RC Marrakech 77810",
+      "city": "Marrakech",
+      "sector": "real_estate",
+      "sector_label": "Real estate development and luxury villa sales",
+      "incorporation_date": "2021-04-12",
+      "customer_since": "2022-03-30",
+      "requested_product": "Real estate development loan - 35,000,000 MAD",
+      "directors": [
+        {"name": "Omar El Fassi Berrada", "role": "Gérant", "nationality": "MA"}
+      ],
+      "shareholders": [
+        {"name": "Omar El Fassi Berrada", "type": "person", "country": "MA", "pct": 51},
+        {"name": "Viktor Aleksandrov Dragunov", "type": "person", "country": "CY", "pct": 49}
+      ],
+      "financials": {
+        "2024": {"revenue": 18000000, "ebitda": 3900000, "net_income": 2100000, "total_assets": 88000000, "total_liabilities": 61000000, "equity": 27000000, "current_assets": 52000000, "current_liabilities": 30000000, "annual_debt_service": 4500000},
+        "2025": {"revenue": 48000000, "ebitda": 7200000, "net_income": 3900000, "total_assets": 121000000, "total_liabilities": 90000000, "equity": 31000000, "current_assets": 71000000, "current_liabilities": 44000000, "annual_debt_service": 6800000}
+      },
+      "documents_on_file": ["statuts", "modele_J", "bilan_2024", "bilan_2025", "cnie_gerant"]
+    }
+  ]
+}

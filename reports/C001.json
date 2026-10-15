@@ -1,0 +1,78 @@
+{
+  "company_id": "C001",
+  "risk": {
+    "score": 0,
+    "level": "Low",
+    "blocked": false,
+    "breakdown": {
+      "screening": 0,
+      "kyc": 0,
+      "transactions": 0,
+      "financial": 0,
+      "inherent": 0
+    },
+    "severity_counts": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "recommendation": "Standard due diligence; the file can follow the normal credit approval circuit.",
+    "due_diligence": "Standard (SDD)",
+    "next_review": "2029-10-14",
+    "blocking_issues": []
+  },
+  "findings": [],
+  "escalation": null,
+  "human_decision": null,
+  "audit_log": [
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "retriever",
+      "action": "loaded company file",
+      "detail": "Atlas Agro Export SARL: 2 financial years, 84 transactions, 6 documents"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "financial",
+      "action": "computed credit ratios",
+      "detail": "D/E=0.87, CR=1.9, DSCR=2.49"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "kyc",
+      "action": "analysed ownership and KYC file",
+      "detail": "2 UBO(s) identified, 0 missing document(s)"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "screening",
+      "action": "screened parties against watchlists",
+      "detail": "9 parties screened, 0 hit(s)"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "transactions",
+      "action": "ran AML scenarios",
+      "detail": "84 transactions, 0 scenario(s) triggered"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "policy",
+      "action": "retrieved governing policy sections",
+      "detail": "0 finding(s) linked to 0 policy section(s)"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "scoring",
+      "action": "computed risk score",
+      "detail": "score=0, level=Low, blocked=False"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "reporter",
+      "action": "wrote report",
+      "detail": "narrative source: template"
+    }
+  ]
+}

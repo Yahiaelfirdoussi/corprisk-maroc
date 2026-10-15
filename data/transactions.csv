@@ -1,0 +1,325 @@
+txn_id,company_id,date,type,amount_mad,counterparty,counterparty_country,channel
+T000007,C001,2025-10-03,cash_withdrawal,25465.95,Caisse - salaires journaliers,MA,Agence
+T000004,C001,2025-10-04,wire_out,1341359.59,Coopérative Souss Agrumes,MA,Virement national
+T000003,C001,2025-10-08,wire_in,1367445.51,Dutch Fresh BV,NL,SWIFT
+T000006,C001,2025-10-14,wire_out,825426.14,Transport Frigo Sud,MA,Virement national
+T000005,C001,2025-10-18,wire_out,869551.07,Emballages Agadir SARL,MA,Virement national
+T000001,C001,2025-10-21,wire_in,1333597.28,Fruits du Sud SAS,FR,SWIFT
+T000002,C001,2025-10-24,wire_in,1530035.18,Hortaliza Iberica SA,ES,SWIFT
+T000011,C001,2025-11-14,wire_out,976352.5,Coopérative Souss Agrumes,MA,Virement national
+T000008,C001,2025-11-17,wire_in,1922422.47,Fruits du Sud SAS,FR,SWIFT
+T000009,C001,2025-11-18,wire_in,1438605.18,Hortaliza Iberica SA,ES,SWIFT
+T000012,C001,2025-11-19,wire_out,1022552.57,Emballages Agadir SARL,MA,Virement national
+T000010,C001,2025-11-21,wire_in,2041589.97,Dutch Fresh BV,NL,SWIFT
+T000014,C001,2025-11-26,cash_withdrawal,23991.48,Caisse - salaires journaliers,MA,Agence
+T000013,C001,2025-11-28,wire_out,805199.01,Transport Frigo Sud,MA,Virement national
+T000021,C001,2025-12-02,cash_withdrawal,38243.29,Caisse - salaires journaliers,MA,Agence
+T000018,C001,2025-12-03,wire_out,1103941.84,Coopérative Souss Agrumes,MA,Virement national
+T000016,C001,2025-12-05,wire_in,1458376.51,Hortaliza Iberica SA,ES,SWIFT
+T000019,C001,2025-12-12,wire_out,1477995.49,Emballages Agadir SARL,MA,Virement national
+T000015,C001,2025-12-14,wire_in,1608300.62,Fruits du Sud SAS,FR,SWIFT
+T000020,C001,2025-12-20,wire_out,1011616.69,Transport Frigo Sud,MA,Virement national
+T000017,C001,2025-12-25,wire_in,1603913.45,Dutch Fresh BV,NL,SWIFT
+T000024,C001,2026-01-10,wire_in,2195285.6,Dutch Fresh BV,NL,SWIFT
+T000026,C001,2026-01-12,wire_out,1261881.72,Emballages Agadir SARL,MA,Virement national
+T000023,C001,2026-01-13,wire_in,1294560.24,Hortaliza Iberica SA,ES,SWIFT
+T000022,C001,2026-01-18,wire_in,1349791.4,Fruits du Sud SAS,FR,SWIFT
+T000025,C001,2026-01-20,wire_out,1508361.4,Coopérative Souss Agrumes,MA,Virement national
+T000028,C001,2026-01-22,cash_withdrawal,25697.46,Caisse - salaires journaliers,MA,Agence
+T000027,C001,2026-01-23,wire_out,855644.12,Transport Frigo Sud,MA,Virement national
+T000031,C001,2026-02-04,wire_in,1656151.47,Dutch Fresh BV,NL,SWIFT
+T000035,C001,2026-02-09,cash_withdrawal,37545.51,Caisse - salaires journaliers,MA,Agence
+T000029,C001,2026-02-10,wire_in,2382265.82,Fruits du Sud SAS,FR,SWIFT
+T000033,C001,2026-02-12,wire_out,930123.28,Emballages Agadir SARL,MA,Virement national
+T000034,C001,2026-02-12,wire_out,967605.62,Transport Frigo Sud,MA,Virement national
+T000032,C001,2026-02-15,wire_out,1308547.56,Coopérative Souss Agrumes,MA,Virement national
+T000030,C001,2026-02-28,wire_in,1479349.06,Hortaliza Iberica SA,ES,SWIFT
+T000039,C001,2026-03-06,wire_out,1169808.17,Coopérative Souss Agrumes,MA,Virement national
+T000042,C001,2026-03-08,cash_withdrawal,37115.36,Caisse - salaires journaliers,MA,Agence
+T000040,C001,2026-03-09,wire_out,1591618.68,Emballages Agadir SARL,MA,Virement national
+T000038,C001,2026-03-18,wire_in,2074952.16,Dutch Fresh BV,NL,SWIFT
+T000037,C001,2026-03-20,wire_in,1961973.95,Hortaliza Iberica SA,ES,SWIFT
+T000041,C001,2026-03-21,wire_out,1350529.57,Transport Frigo Sud,MA,Virement national
+T000036,C001,2026-03-22,wire_in,1977642.46,Fruits du Sud SAS,FR,SWIFT
+T000044,C001,2026-04-02,wire_in,1474857.69,Hortaliza Iberica SA,ES,SWIFT
+T000045,C001,2026-04-02,wire_in,2166054.96,Dutch Fresh BV,NL,SWIFT
+T000047,C001,2026-04-07,wire_out,1530508.9,Emballages Agadir SARL,MA,Virement national
+T000049,C001,2026-04-11,cash_withdrawal,25315.66,Caisse - salaires journaliers,MA,Agence
+T000046,C001,2026-04-13,wire_out,1014192.7,Coopérative Souss Agrumes,MA,Virement national
+T000048,C001,2026-04-19,wire_out,1501094.1,Transport Frigo Sud,MA,Virement national
+T000043,C001,2026-04-27,wire_in,2121976.29,Fruits du Sud SAS,FR,SWIFT
+T000052,C001,2026-05-09,wire_in,1367556.38,Dutch Fresh BV,NL,SWIFT
+T000054,C001,2026-05-09,wire_out,1397611.05,Emballages Agadir SARL,MA,Virement national
+T000056,C001,2026-05-13,cash_withdrawal,29049.91,Caisse - salaires journaliers,MA,Agence
+T000055,C001,2026-05-14,wire_out,1518258.31,Transport Frigo Sud,MA,Virement national
+T000050,C001,2026-05-16,wire_in,1674758.28,Fruits du Sud SAS,FR,SWIFT
+T000051,C001,2026-05-21,wire_in,1750622.22,Hortaliza Iberica SA,ES,SWIFT
+T000053,C001,2026-05-24,wire_out,1249094.51,Coopérative Souss Agrumes,MA,Virement national
+T000058,C001,2026-06-03,wire_in,2106938.59,Hortaliza Iberica SA,ES,SWIFT
+T000062,C001,2026-06-03,wire_out,1107813.85,Transport Frigo Sud,MA,Virement national
+T000057,C001,2026-06-05,wire_in,1811431.55,Fruits du Sud SAS,FR,SWIFT
+T000063,C001,2026-06-20,cash_withdrawal,44903.03,Caisse - salaires journaliers,MA,Agence
+T000060,C001,2026-06-21,wire_out,927985.6,Coopérative Souss Agrumes,MA,Virement national
+T000061,C001,2026-06-22,wire_out,1137727.97,Emballages Agadir SARL,MA,Virement national
+T000059,C001,2026-06-28,wire_in,1331578.96,Dutch Fresh BV,NL,SWIFT
+T000066,C001,2026-07-01,wire_in,2016340.09,Dutch Fresh BV,NL,SWIFT
+T000067,C001,2026-07-04,wire_out,1345368.3,Coopérative Souss Agrumes,MA,Virement national
+T000070,C001,2026-07-04,cash_withdrawal,27337.5,Caisse - salaires journaliers,MA,Agence
+T000064,C001,2026-07-17,wire_in,1501696.94,Fruits du Sud SAS,FR,SWIFT
+T000065,C001,2026-07-18,wire_in,2232935.64,Hortaliza Iberica SA,ES,SWIFT
+T000068,C001,2026-07-18,wire_out,1400702.24,Emballages Agadir SARL,MA,Virement national
+T000069,C001,2026-07-25,wire_out,1312769.44,Transport Frigo Sud,MA,Virement national
+T000075,C001,2026-08-04,wire_out,1496414.86,Emballages Agadir SARL,MA,Virement national
+T000071,C001,2026-08-06,wire_in,1744468.45,Fruits du Sud SAS,FR,SWIFT
+T000073,C001,2026-08-09,wire_in,2366265.72,Dutch Fresh BV,NL,SWIFT
+T000076,C001,2026-08-10,wire_out,1473335.48,Transport Frigo Sud,MA,Virement national
+T000077,C001,2026-08-17,cash_withdrawal,35224.26,Caisse - salaires journaliers,MA,Agence
+T000072,C001,2026-08-24,wire_in,2251023.53,Hortaliza Iberica SA,ES,SWIFT
+T000074,C001,2026-08-25,wire_out,942921.5,Coopérative Souss Agrumes,MA,Virement national
+T000081,C001,2026-09-01,wire_out,1279155.67,Coopérative Souss Agrumes,MA,Virement national
+T000078,C001,2026-09-05,wire_in,1648696.62,Fruits du Sud SAS,FR,SWIFT
+T000079,C001,2026-09-06,wire_in,1847254.84,Hortaliza Iberica SA,ES,SWIFT
+T000083,C001,2026-09-12,wire_out,1502977.5,Transport Frigo Sud,MA,Virement national
+T000082,C001,2026-09-16,wire_out,815581.39,Emballages Agadir SARL,MA,Virement national
+T000080,C001,2026-09-25,wire_in,2306920.9,Dutch Fresh BV,NL,SWIFT
+T000084,C001,2026-09-27,cash_withdrawal,40169.37,Caisse - salaires journaliers,MA,Agence
+T000087,C002,2025-10-03,wire_in,1485526.08,Maersk Line Agency,DK,SWIFT
+T000090,C002,2025-10-05,wire_out,689874.03,Leasing Equip Maroc,MA,Virement national
+T000085,C002,2025-10-08,wire_in,946340.13,Renault Tanger Exploitation,MA,SWIFT
+T000086,C002,2025-10-19,wire_in,1657559.56,Iberia Freight Holdings SL,ES,SWIFT
+T000089,C002,2025-10-25,wire_out,972894.32,Afriquia SMDC,MA,Virement national
+T000088,C002,2025-10-27,wire_out,648448.76,Tanger Med Port Authority,MA,Virement national
+T000092,C002,2025-11-06,wire_in,1112045.3,Iberia Freight Holdings SL,ES,SWIFT
+T000094,C002,2025-11-07,wire_out,1250239.45,Tanger Med Port Authority,MA,Virement national
+T000096,C002,2025-11-07,wire_out,1099064.28,Leasing Equip Maroc,MA,Virement national
+T000091,C002,2025-11-16,wire_in,1657478.94,Renault Tanger Exploitation,MA,SWIFT
+T000095,C002,2025-11-25,wire_out,1110951.75,Afriquia SMDC,MA,Virement national
+T000093,C002,2025-11-28,wire_in,1385275.13,Maersk Line Agency,DK,SWIFT
+T000100,C002,2025-12-08,wire_out,757288.14,Tanger Med Port Authority,MA,Virement national
+T000101,C002,2025-12-11,wire_out,614723.98,Afriquia SMDC,MA,Virement national
+T000097,C002,2025-12-13,wire_in,1696119.49,Renault Tanger Exploitation,MA,SWIFT
+T000099,C002,2025-12-17,wire_in,1261188.91,Maersk Line Agency,DK,SWIFT
+T000102,C002,2025-12-18,wire_out,761080.31,Leasing Equip Maroc,MA,Virement national
+T000098,C002,2025-12-21,wire_in,1198736.4,Iberia Freight Holdings SL,ES,SWIFT
+T000106,C002,2026-01-02,wire_out,1201744.78,Tanger Med Port Authority,MA,Virement national
+T000107,C002,2026-01-03,wire_out,959909.28,Afriquia SMDC,MA,Virement national
+T000103,C002,2026-01-08,wire_in,905752.67,Renault Tanger Exploitation,MA,SWIFT
+T000105,C002,2026-01-08,wire_in,953920.26,Maersk Line Agency,DK,SWIFT
+T000108,C002,2026-01-09,wire_out,1068284.44,Leasing Equip Maroc,MA,Virement national
+T000104,C002,2026-01-23,wire_in,1404882.37,Iberia Freight Holdings SL,ES,SWIFT
+T000114,C002,2026-02-04,wire_out,667851.57,Leasing Equip Maroc,MA,Virement national
+T000109,C002,2026-02-07,wire_in,1331387.15,Renault Tanger Exploitation,MA,SWIFT
+T000112,C002,2026-02-08,wire_out,1149233.6,Tanger Med Port Authority,MA,Virement national
+T000157,C002,2026-02-10,wire_in,1500000,Pacific Cargo Trust SA,PA,SWIFT
+T000158,C002,2026-02-12,wire_out,1450000,Seaview Consulting Ltd,PA,SWIFT
+T000111,C002,2026-02-19,wire_in,1360969.32,Maersk Line Agency,DK,SWIFT
+T000110,C002,2026-02-24,wire_in,1648411.39,Iberia Freight Holdings SL,ES,SWIFT
+T000113,C002,2026-02-26,wire_out,884941.97,Afriquia SMDC,MA,Virement national
+T000119,C002,2026-03-04,wire_out,642428.87,Afriquia SMDC,MA,Virement national
+T000115,C002,2026-03-14,wire_in,1183438.05,Renault Tanger Exploitation,MA,SWIFT
+T000116,C002,2026-03-14,wire_in,1273619.73,Iberia Freight Holdings SL,ES,SWIFT
+T000118,C002,2026-03-21,wire_out,1288915.65,Tanger Med Port Authority,MA,Virement national
+T000117,C002,2026-03-24,wire_in,943336.95,Maersk Line Agency,DK,SWIFT
+T000120,C002,2026-03-24,wire_out,837511.82,Leasing Equip Maroc,MA,Virement national
+T000126,C002,2026-04-03,wire_out,910191.52,Leasing Equip Maroc,MA,Virement national
+T000124,C002,2026-04-06,wire_out,794981.6,Tanger Med Port Authority,MA,Virement national
+T000122,C002,2026-04-07,wire_in,1052167.13,Iberia Freight Holdings SL,ES,SWIFT
+T000125,C002,2026-04-08,wire_out,1212140.17,Afriquia SMDC,MA,Virement national
+T000123,C002,2026-04-15,wire_in,1012145.84,Maersk Line Agency,DK,SWIFT
+T000121,C002,2026-04-28,wire_in,987415.23,Renault Tanger Exploitation,MA,SWIFT
+T000130,C002,2026-05-03,wire_out,1248456.89,Tanger Med Port Authority,MA,Virement national
+T000128,C002,2026-05-04,wire_in,940470.66,Iberia Freight Holdings SL,ES,SWIFT
+T000132,C002,2026-05-14,wire_out,939948.79,Leasing Equip Maroc,MA,Virement national
+T000129,C002,2026-05-18,wire_in,1568822.07,Maersk Line Agency,DK,SWIFT
+T000127,C002,2026-05-28,wire_in,1584773.51,Renault Tanger Exploitation,MA,SWIFT
+T000131,C002,2026-05-28,wire_out,765465.64,Afriquia SMDC,MA,Virement national
+T000135,C002,2026-06-01,wire_in,1688247.08,Maersk Line Agency,DK,SWIFT
+T000134,C002,2026-06-02,wire_in,1031709.7,Iberia Freight Holdings SL,ES,SWIFT
+T000159,C002,2026-06-03,wire_in,750000,Pacific Cargo Trust SA,PA,SWIFT
+T000133,C002,2026-06-07,wire_in,1591720.32,Renault Tanger Exploitation,MA,SWIFT
+T000136,C002,2026-06-09,wire_out,1248562.65,Tanger Med Port Authority,MA,Virement national
+T000138,C002,2026-06-14,wire_out,1087614.05,Leasing Equip Maroc,MA,Virement national
+T000137,C002,2026-06-26,wire_out,918505.86,Afriquia SMDC,MA,Virement national
+T000143,C002,2026-07-02,wire_out,1005426.2,Afriquia SMDC,MA,Virement national
+T000142,C002,2026-07-10,wire_out,752390.63,Tanger Med Port Authority,MA,Virement national
+T000141,C002,2026-07-16,wire_in,1023837.46,Maersk Line Agency,DK,SWIFT
+T000140,C002,2026-07-18,wire_in,1429497.05,Iberia Freight Holdings SL,ES,SWIFT
+T000144,C002,2026-07-18,wire_out,642670.3,Leasing Equip Maroc,MA,Virement national
+T000139,C002,2026-07-24,wire_in,1696338.15,Renault Tanger Exploitation,MA,SWIFT
+T000148,C002,2026-08-02,wire_out,1272545.23,Tanger Med Port Authority,MA,Virement national
+T000149,C002,2026-08-03,wire_out,1195939.78,Afriquia SMDC,MA,Virement national
+T000150,C002,2026-08-03,wire_out,1016524.57,Leasing Equip Maroc,MA,Virement national
+T000145,C002,2026-08-11,wire_in,945732.22,Renault Tanger Exploitation,MA,SWIFT
+T000146,C002,2026-08-19,wire_in,1281430.81,Iberia Freight Holdings SL,ES,SWIFT
+T000147,C002,2026-08-28,wire_in,1324900.91,Maersk Line Agency,DK,SWIFT
+T000155,C002,2026-09-03,wire_out,893457.44,Afriquia SMDC,MA,Virement national
+T000152,C002,2026-09-13,wire_in,995909.29,Iberia Freight Holdings SL,ES,SWIFT
+T000153,C002,2026-09-19,wire_in,1096972.28,Maersk Line Agency,DK,SWIFT
+T000156,C002,2026-09-19,wire_out,995658.85,Leasing Equip Maroc,MA,Virement national
+T000154,C002,2026-09-20,wire_out,627819.16,Tanger Med Port Authority,MA,Virement national
+T000151,C002,2026-09-22,wire_in,1589455.36,Renault Tanger Exploitation,MA,SWIFT
+T000164,C003,2025-10-01,cash_deposit,95032.91,Dépôt espèces,MA,Agence Ain Sebaa
+T000165,C003,2025-10-04,cash_deposit,91644.69,Dépôt espèces,MA,Agence Derb Omar
+T000162,C003,2025-10-05,cash_deposit,96910.87,Dépôt espèces,MA,Agence Maarif
+T000168,C003,2025-10-08,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000160,C003,2025-10-09,cash_deposit,92797.48,Dépôt espèces,MA,Agence Ain Sebaa
+T000161,C003,2025-10-11,cash_deposit,93100.44,Dépôt espèces,MA,Agence Maarif
+T000163,C003,2025-10-15,cash_deposit,93782.36,Dépôt espèces,MA,Agence Derb Omar
+T000166,C003,2025-10-17,wire_in,2000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000167,C003,2025-10-19,wire_out,1965703.7,Shenzhen Brightstar Trading,HK,SWIFT
+T000173,C003,2025-11-05,cash_deposit,93327.3,Dépôt espèces,MA,Agence Derb Omar
+T000169,C003,2025-11-06,cash_deposit,94856.02,Dépôt espèces,MA,Agence Ain Sebaa
+T000172,C003,2025-11-10,cash_deposit,99199.45,Dépôt espèces,MA,Agence Derb Omar
+T000175,C003,2025-11-10,wire_in,1500000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000176,C003,2025-11-11,wire_out,1456874.74,Al Noor General Trading FZE,AE,SWIFT
+T000171,C003,2025-11-17,cash_deposit,91068.84,Dépôt espèces,MA,Agence Ain Sebaa
+T000170,C003,2025-11-23,cash_deposit,93662.15,Dépôt espèces,MA,Agence Ain Sebaa
+T000174,C003,2025-11-24,cash_deposit,95868.37,Dépôt espèces,MA,Agence Maarif
+T000177,C003,2025-11-28,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000180,C003,2025-12-02,cash_deposit,91031.2,Dépôt espèces,MA,Agence Derb Omar
+T000187,C003,2025-12-02,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000179,C003,2025-12-03,cash_deposit,96581.7,Dépôt espèces,MA,Agence Maarif
+T000184,C003,2025-12-03,cash_deposit,99316.45,Dépôt espèces,MA,Agence Ain Sebaa
+T000185,C003,2025-12-05,wire_in,1000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000186,C003,2025-12-06,wire_out,955787.2,Al Noor General Trading FZE,AE,SWIFT
+T000178,C003,2025-12-09,cash_deposit,98966.96,Dépôt espèces,MA,Agence Derb Omar
+T000183,C003,2025-12-14,cash_deposit,95935.98,Dépôt espèces,MA,Agence Derb Omar
+T000181,C003,2025-12-21,cash_deposit,99622.22,Dépôt espèces,MA,Agence Derb Omar
+T000182,C003,2025-12-24,cash_deposit,94888.15,Dépôt espèces,MA,Agence Ain Sebaa
+T000189,C003,2026-01-12,cash_deposit,92848.67,Dépôt espèces,MA,Agence Derb Omar
+T000194,C003,2026-01-14,wire_in,1000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000196,C003,2026-01-14,wire_out,250000,Al Noor General Trading FZE,AE,SWIFT
+T000195,C003,2026-01-16,wire_out,976943.19,Shenzhen Brightstar Trading,HK,SWIFT
+T000190,C003,2026-01-22,cash_deposit,91904.58,Dépôt espèces,MA,Agence Ain Sebaa
+T000192,C003,2026-01-24,cash_deposit,92360.07,Dépôt espèces,MA,Agence Derb Omar
+T000188,C003,2026-01-26,cash_deposit,99555.33,Dépôt espèces,MA,Agence Derb Omar
+T000191,C003,2026-01-28,cash_deposit,94576.12,Dépôt espèces,MA,Agence Ain Sebaa
+T000193,C003,2026-01-28,cash_deposit,92430.02,Dépôt espèces,MA,Agence Derb Omar
+T000197,C003,2026-02-06,cash_deposit,97928.9,Dépôt espèces,MA,Agence Derb Omar
+T000199,C003,2026-02-08,cash_deposit,92756.24,Dépôt espèces,MA,Agence Maarif
+T000201,C003,2026-02-08,cash_deposit,91208.25,Dépôt espèces,MA,Agence Derb Omar
+T000200,C003,2026-02-12,cash_deposit,93685.68,Dépôt espèces,MA,Agence Derb Omar
+T000198,C003,2026-02-13,cash_deposit,98675.07,Dépôt espèces,MA,Agence Maarif
+T000202,C003,2026-02-13,cash_deposit,93888.71,Dépôt espèces,MA,Agence Derb Omar
+T000203,C003,2026-02-25,wire_in,2000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000204,C003,2026-02-27,wire_out,1941542.17,Al Noor General Trading FZE,AE,SWIFT
+T000205,C003,2026-02-27,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000208,C003,2026-03-02,cash_deposit,91953.94,Dépôt espèces,MA,Agence Maarif
+T000206,C003,2026-03-04,cash_deposit,98717.94,Dépôt espèces,MA,Agence Maarif
+T000207,C003,2026-03-06,cash_deposit,96109.19,Dépôt espèces,MA,Agence Maarif
+T000209,C003,2026-03-12,cash_deposit,97411.2,Dépôt espèces,MA,Agence Maarif
+T000210,C003,2026-03-14,wire_in,1000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000211,C003,2026-03-15,wire_out,945283.35,Al Noor General Trading FZE,AE,SWIFT
+T000212,C003,2026-03-23,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000217,C003,2026-04-11,wire_in,2000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000218,C003,2026-04-13,wire_out,1920854.7,Shenzhen Brightstar Trading,HK,SWIFT
+T000216,C003,2026-04-14,cash_deposit,91615.77,Dépôt espèces,MA,Agence Ain Sebaa
+T000213,C003,2026-04-17,cash_deposit,99145.06,Dépôt espèces,MA,Agence Ain Sebaa
+T000214,C003,2026-04-22,cash_deposit,97330.98,Dépôt espèces,MA,Agence Ain Sebaa
+T000219,C003,2026-04-22,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000215,C003,2026-04-24,cash_deposit,96901.53,Dépôt espèces,MA,Agence Maarif
+T000221,C003,2026-05-05,cash_deposit,92688.19,Dépôt espèces,MA,Agence Ain Sebaa
+T000228,C003,2026-05-07,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000225,C003,2026-05-10,cash_deposit,92849.61,Dépôt espèces,MA,Agence Ain Sebaa
+T000220,C003,2026-05-13,cash_deposit,97135.43,Dépôt espèces,MA,Agence Ain Sebaa
+T000222,C003,2026-05-13,cash_deposit,96960.4,Dépôt espèces,MA,Agence Derb Omar
+T000224,C003,2026-05-18,cash_deposit,98336.78,Dépôt espèces,MA,Agence Maarif
+T000223,C003,2026-05-20,cash_deposit,96008.13,Dépôt espèces,MA,Agence Maarif
+T000226,C003,2026-05-20,wire_in,2000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000227,C003,2026-05-22,wire_out,1913059.18,Al Noor General Trading FZE,AE,SWIFT
+T000231,C003,2026-06-03,cash_deposit,98202.13,Dépôt espèces,MA,Agence Derb Omar
+T000233,C003,2026-06-05,cash_deposit,91214.94,Dépôt espèces,MA,Agence Derb Omar
+T000234,C003,2026-06-16,wire_in,1000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000235,C003,2026-06-18,wire_out,983168.21,Al Noor General Trading FZE,AE,SWIFT
+T000236,C003,2026-06-19,wire_out,250000,Al Noor General Trading FZE,AE,SWIFT
+T000229,C003,2026-06-22,cash_deposit,91746.2,Dépôt espèces,MA,Agence Ain Sebaa
+T000230,C003,2026-06-22,cash_deposit,96569.88,Dépôt espèces,MA,Agence Maarif
+T000232,C003,2026-06-22,cash_deposit,93731.69,Dépôt espèces,MA,Agence Derb Omar
+T000241,C003,2026-07-15,cash_deposit,91441.92,Dépôt espèces,MA,Agence Derb Omar
+T000237,C003,2026-07-16,cash_deposit,94516.95,Dépôt espèces,MA,Agence Derb Omar
+T000244,C003,2026-07-18,wire_in,2000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000246,C003,2026-07-18,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000245,C003,2026-07-20,wire_out,1959668.3,Al Noor General Trading FZE,AE,SWIFT
+T000238,C003,2026-07-21,cash_deposit,97051.08,Dépôt espèces,MA,Agence Derb Omar
+T000239,C003,2026-07-25,cash_deposit,94741.29,Dépôt espèces,MA,Agence Derb Omar
+T000240,C003,2026-07-26,cash_deposit,99430.1,Dépôt espèces,MA,Agence Ain Sebaa
+T000243,C003,2026-07-26,cash_deposit,95088.86,Dépôt espèces,MA,Agence Ain Sebaa
+T000242,C003,2026-07-28,cash_deposit,92067.96,Dépôt espèces,MA,Agence Derb Omar
+T000254,C003,2026-08-03,wire_out,250000,Al Noor General Trading FZE,AE,SWIFT
+T000252,C003,2026-08-08,wire_in,2000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000248,C003,2026-08-09,cash_deposit,97615.64,Dépôt espèces,MA,Agence Ain Sebaa
+T000249,C003,2026-08-09,cash_deposit,97739.16,Dépôt espèces,MA,Agence Ain Sebaa
+T000253,C003,2026-08-10,wire_out,1967163.22,Al Noor General Trading FZE,AE,SWIFT
+T000251,C003,2026-08-15,cash_deposit,91681.85,Dépôt espèces,MA,Agence Maarif
+T000250,C003,2026-08-16,cash_deposit,96515.39,Dépôt espèces,MA,Agence Maarif
+T000247,C003,2026-08-24,cash_deposit,98581.16,Dépôt espèces,MA,Agence Maarif
+T000255,C003,2026-09-08,cash_deposit,94370.71,Dépôt espèces,MA,Agence Derb Omar
+T000262,C003,2026-09-12,wire_out,500000,Al Noor General Trading FZE,AE,SWIFT
+T000259,C003,2026-09-13,cash_deposit,98962.58,Dépôt espèces,MA,Agence Ain Sebaa
+T000257,C003,2026-09-14,cash_deposit,93911.76,Dépôt espèces,MA,Agence Maarif
+T000258,C003,2026-09-14,cash_deposit,91547.94,Dépôt espèces,MA,Agence Maarif
+T000256,C003,2026-09-23,cash_deposit,92882.79,Dépôt espèces,MA,Agence Maarif
+T000260,C003,2026-09-23,wire_in,1000000,Bluewater Global Ventures Ltd,VG,SWIFT
+T000261,C003,2026-09-25,wire_out,930353.77,Al Noor General Trading FZE,AE,SWIFT
+T000266,C004,2025-10-08,wire_out,2476458.96,BTP Atlas Construction,MA,Virement national
+T000267,C004,2025-10-09,wire_out,2371671.95,Marbre & Design Marrakech,MA,Virement national
+T000264,C004,2025-10-18,cash_deposit,486382.05,Avance acquéreur villa,MA,Agence Guéliz
+T000265,C004,2025-10-18,cash_deposit,509940.68,Avance acquéreur villa,MA,Agence Guéliz
+T000263,C004,2025-10-25,wire_in,3000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000268,C004,2025-11-01,wire_in,3000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000272,C004,2025-11-05,wire_out,3461443.96,Marbre & Design Marrakech,MA,Virement national
+T000270,C004,2025-11-13,cash_deposit,475881.62,Avance acquéreur villa,MA,Agence Guéliz
+T000269,C004,2025-11-22,cash_deposit,455613.85,Avance acquéreur villa,MA,Agence Guéliz
+T000271,C004,2025-11-27,wire_out,2434780.3,BTP Atlas Construction,MA,Virement national
+T000275,C004,2025-12-01,cash_deposit,187776.36,Avance acquéreur villa,MA,Agence Guéliz
+T000276,C004,2025-12-14,wire_out,1771398.97,BTP Atlas Construction,MA,Virement national
+T000277,C004,2025-12-15,wire_out,1863458.05,Marbre & Design Marrakech,MA,Virement national
+T000273,C004,2025-12-18,wire_in,2000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000274,C004,2025-12-19,cash_deposit,403976.39,Avance acquéreur villa,MA,Agence Guéliz
+T000279,C004,2026-01-07,cash_deposit,354614.7,Avance acquéreur villa,MA,Agence Guéliz
+T000278,C004,2026-01-09,wire_in,3000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000280,C004,2026-01-11,cash_deposit,492553.37,Avance acquéreur villa,MA,Agence Guéliz
+T000281,C004,2026-01-13,wire_out,2056513.23,BTP Atlas Construction,MA,Virement national
+T000282,C004,2026-01-27,wire_out,2343129.65,Marbre & Design Marrakech,MA,Virement national
+T000284,C004,2026-02-01,cash_deposit,487060.92,Avance acquéreur villa,MA,Agence Guéliz
+T000285,C004,2026-02-02,cash_deposit,599958.52,Avance acquéreur villa,MA,Agence Guéliz
+T000287,C004,2026-02-03,wire_out,3062466.1,Marbre & Design Marrakech,MA,Virement national
+T000286,C004,2026-02-12,wire_out,1948444.33,BTP Atlas Construction,MA,Virement national
+T000283,C004,2026-02-27,wire_in,2000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000290,C004,2026-03-01,wire_out,2742671.31,BTP Atlas Construction,MA,Virement national
+T000289,C004,2026-03-08,cash_deposit,239712.31,Avance acquéreur villa,MA,Agence Guéliz
+T000291,C004,2026-03-08,wire_out,1752441.95,Marbre & Design Marrakech,MA,Virement national
+T000288,C004,2026-03-21,wire_in,2000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000295,C004,2026-04-06,cash_deposit,422651.71,Avance acquéreur villa,MA,Agence Guéliz
+T000293,C004,2026-04-07,cash_deposit,359265.29,Avance acquéreur villa,MA,Agence Guéliz
+T000294,C004,2026-04-09,cash_deposit,495104.14,Avance acquéreur villa,MA,Agence Guéliz
+T000324,C004,2026-04-18,wire_out,2200000,Golden Crescent Shipping L.L.C.,AE,SWIFT
+T000292,C004,2026-04-22,wire_in,2000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000296,C004,2026-04-24,wire_out,2936714.46,BTP Atlas Construction,MA,Virement national
+T000297,C004,2026-04-25,wire_out,3138602.35,Marbre & Design Marrakech,MA,Virement national
+T000299,C004,2026-05-01,cash_deposit,567999.23,Avance acquéreur villa,MA,Agence Guéliz
+T000298,C004,2026-05-10,wire_in,2000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000301,C004,2026-05-13,cash_deposit,328494.5,Avance acquéreur villa,MA,Agence Guéliz
+T000300,C004,2026-05-19,cash_deposit,454806.28,Avance acquéreur villa,MA,Agence Guéliz
+T000303,C004,2026-05-19,wire_out,2881228.83,Marbre & Design Marrakech,MA,Virement national
+T000302,C004,2026-05-23,wire_out,1896659.55,BTP Atlas Construction,MA,Virement national
+T000304,C004,2026-06-21,wire_in,2000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000305,C004,2026-06-23,cash_deposit,497616.4,Avance acquéreur villa,MA,Agence Guéliz
+T000307,C004,2026-06-26,wire_out,1742110.13,Marbre & Design Marrakech,MA,Virement national
+T000306,C004,2026-06-28,wire_out,2868518.08,BTP Atlas Construction,MA,Virement national
+T000310,C004,2026-07-12,cash_deposit,181030.53,Avance acquéreur villa,MA,Agence Guéliz
+T000309,C004,2026-07-18,cash_deposit,342770.11,Avance acquéreur villa,MA,Agence Guéliz
+T000308,C004,2026-07-19,wire_in,2000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000311,C004,2026-07-21,wire_out,2182462.35,BTP Atlas Construction,MA,Virement national
+T000312,C004,2026-07-28,wire_out,2340117.48,Marbre & Design Marrakech,MA,Virement national
+T000316,C004,2026-08-05,wire_out,2370974.29,BTP Atlas Construction,MA,Virement national
+T000314,C004,2026-08-12,cash_deposit,436013.3,Avance acquéreur villa,MA,Agence Guéliz
+T000313,C004,2026-08-16,wire_in,2000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000317,C004,2026-08-24,wire_out,2543493.49,Marbre & Design Marrakech,MA,Virement national
+T000315,C004,2026-08-27,cash_deposit,356882.71,Avance acquéreur villa,MA,Agence Guéliz
+T000321,C004,2026-09-14,cash_deposit,521580.57,Avance acquéreur villa,MA,Agence Guéliz
+T000322,C004,2026-09-19,wire_out,2036791.08,BTP Atlas Construction,MA,Virement national
+T000318,C004,2026-09-21,wire_in,3000000,Aleksandrov Family Office Ltd,CY,SWIFT
+T000320,C004,2026-09-25,cash_deposit,367573.88,Avance acquéreur villa,MA,Agence Guéliz
+T000319,C004,2026-09-26,cash_deposit,563827.95,Avance acquéreur villa,MA,Agence Guéliz
+T000323,C004,2026-09-28,wire_out,1990990.34,Marbre & Design Marrakech,MA,Virement national

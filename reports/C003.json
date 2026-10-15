@@ -1,0 +1,428 @@
+{
+  "company_id": "C003",
+  "risk": {
+    "score": 100,
+    "level": "High",
+    "blocked": true,
+    "breakdown": {
+      "screening": 30,
+      "kyc": 25,
+      "transactions": 30,
+      "financial": 20,
+      "inherent": 15
+    },
+    "severity_counts": {
+      "critical": 1,
+      "high": 12,
+      "medium": 3,
+      "low": 0
+    },
+    "recommendation": "DO NOT PROCEED. Critical issue(s) must be cleared by Compliance before any decision; credit request on hold.",
+    "due_diligence": "Enhanced (EDD) - blocked",
+    "next_review": "2027-10-14",
+    "blocking_issues": [
+      "Beneficial owner not identified"
+    ]
+  },
+  "findings": [
+    {
+      "agent": "financial",
+      "category": "financial",
+      "code": "FIN-LEVERAGE",
+      "title": "Leverage above risk appetite",
+      "severity": "medium",
+      "evidence": "Debt-to-equity 4.64 (limit 3.0).",
+      "policy_query": "leverage debt to equity ratio exceed 3.0 guarantees",
+      "policy_doc": "POL-CRD-04",
+      "action": "Require additional guarantees or reduce the exposure.",
+      "policy_ref": "POL-CRD-04 §1. Leverage",
+      "policy_excerpt": "The debt-to-equity ratio (total liabilities / equity) should not exceed 3.0. Above 3.0 the file requires additional guarantees or a reduced exposure.",
+      "policy_score": 0.601
+    },
+    {
+      "agent": "financial",
+      "category": "financial",
+      "code": "FIN-HISTORY",
+      "title": "Insufficient financial history",
+      "severity": "high",
+      "evidence": "Only 1 year(s) of statements for a 20,000,000 MAD request.",
+      "policy_query": "financial history two years statements required above 5,000,000 MAD",
+      "policy_doc": "POL-CRD-04",
+      "action": "Credit Committee exception required.",
+      "policy_ref": "POL-CRD-04 §5. Financial history",
+      "policy_excerpt": "At least two years of financial statements are required for credit facilities above 5,000,000 MAD. Exceptions require Credit Committee approval.",
+      "policy_score": 0.654
+    },
+    {
+      "agent": "financial",
+      "category": "financial",
+      "code": "FIN-EXPOSURE",
+      "title": "Requested exposure large relative to size",
+      "severity": "high",
+      "evidence": "Request = 211% of annual revenue (limit 50%).",
+      "policy_query": "exposure relative to size 50% annual revenue credit committee",
+      "policy_doc": "POL-CRD-04",
+      "action": "Credit Committee approval required.",
+      "policy_ref": "POL-CRD-04 §6. Exposure relative to size",
+      "policy_excerpt": "Requested exposure above 50% of annual revenue requires Credit Committee approval.",
+      "policy_score": 0.762
+    },
+    {
+      "agent": "kyc",
+      "category": "kyc",
+      "code": "KYC-OFFSHORE",
+      "title": "Shareholder in high-secrecy jurisdiction: Bluewater Global Ventures Ltd",
+      "severity": "high",
+      "evidence": "Bluewater Global Ventures Ltd holds 90% and is incorporated in British Virgin Islands.",
+      "policy_query": "offshore opaque structures high secrecy jurisdiction shareholder register UBO declaration economic rationale",
+      "policy_doc": "POL-KYC-01",
+      "action": "Obtain the offshore entity's shareholder register, a certified UBO declaration and the economic rationale.",
+      "policy_ref": "POL-KYC-01 §3. Offshore and opaque structures",
+      "policy_excerpt": "Shareholders incorporated in high-secrecy jurisdictions (for example British Virgin Islands, Panama, Seychelles, Cayman Islands) trigger enhanced due diligence. The analyst must obtain the register of shareholders of the offshore entity, a certified UBO declaration, and an explanation of the economic rationale of the s…",
+      "policy_score": 0.483
+    },
+    {
+      "agent": "kyc",
+      "category": "kyc",
+      "code": "KYC-UBO-UNKNOWN",
+      "title": "Beneficial owner not identified",
+      "severity": "critical",
+      "evidence": "Bluewater Global Ventures Ltd holds 90% but only 0% of its own ownership is identified.",
+      "policy_query": "beneficial owner 25% look through ownership chain not identified escalate compliance",
+      "policy_doc": "POL-KYC-01",
+      "action": "Look through the ownership chain to the natural persons; escalate to Compliance if not possible.",
+      "policy_ref": "POL-KYC-01 §2. Beneficial owners (UBO)",
+      "policy_excerpt": "The bank must identify every natural person who directly or indirectly owns 25% or more of the capital or voting rights, or who otherwise exercises control. When a shareholder is a legal entity, the bank must look through the ownership chain until the natural persons are identified. If no beneficial owner can be identi…",
+      "policy_score": 0.413
+    },
+    {
+      "agent": "kyc",
+      "category": "inherent",
+      "code": "KYC-NEW-COMPANY",
+      "title": "Recently incorporated company",
+      "severity": "high",
+      "evidence": "Incorporated 23 months ago (2024-11-20); requested amount 20,000,000 MAD.",
+      "policy_query": "newly incorporated companies less than 24 months enhanced due diligence site visit",
+      "policy_doc": "POL-KYC-01",
+      "action": "Perform enhanced due diligence and a site visit.",
+      "policy_ref": "POL-KYC-01 §4. Newly incorporated companies",
+      "policy_excerpt": "Companies incorporated less than 24 months ago with limited financial history are considered higher risk. Credit requests above 5,000,000 MAD from such companies require enhanced due diligence and a site visit report.",
+      "policy_score": 0.594
+    },
+    {
+      "agent": "kyc",
+      "category": "inherent",
+      "code": "KYC-SECTOR",
+      "title": "High inherent-risk sector",
+      "severity": "medium",
+      "evidence": "Sector: General import/export trading (electronics, textiles).",
+      "policy_query": "sector inherent risk real estate trading logistics classification",
+      "policy_doc": "POL-KYC-01",
+      "action": "Apply sector-specific vigilance.",
+      "policy_ref": "POL-KYC-01 §6. Sector inherent risk",
+      "policy_excerpt": "Real estate development, general import/export trading, money exchange, precious metals and cash-intensive businesses are classified as high inherent-risk sectors. Logistics and construction are medium. Agriculture, manufacturing with audited accounts, and regulated professions are low.",
+      "policy_score": 0.456
+    },
+    {
+      "agent": "kyc",
+      "category": "kyc",
+      "code": "KYC-DOCS",
+      "title": "Incomplete KYC / credit file",
+      "severity": "high",
+      "evidence": "Missing: attestation_fiscale, bilan_2024, bilan_2025, declaration_ubo.",
+      "policy_query": "identification legal entities statutes commercial register missing documents cannot be approved",
+      "policy_doc": "POL-KYC-01",
+      "action": "Request the missing documents before any decision.",
+      "policy_ref": "POL-KYC-01 §1. Identification of legal entities",
+      "policy_excerpt": "Every corporate customer must provide its statutes, a recent extract of the commercial register (modèle J), its ICE number, and the identity documents (CNIE or passport) of every director and legal representative. Files missing any of these documents cannot be approved.",
+      "policy_score": 0.56
+    },
+    {
+      "agent": "screening",
+      "category": "screening",
+      "code": "PEP",
+      "title": "Politically exposed person: Rachid Ouazzani Kettani",
+      "severity": "high",
+      "evidence": "Rachid Ouazzani Kettani (director (Gérant)) matches PEP 'Rachid Ouazzani Kettani' - Former regional elected official (illustrative), until 2021 (similarity 100%).",
+      "policy_query": "politically exposed person PEP enhanced due diligence source of wealth senior management approval",
+      "policy_doc": "POL-SAN-03",
+      "action": "Verify source of wealth and source of funds; obtain senior management approval.",
+      "policy_ref": "POL-SAN-03 §4. Politically exposed persons (PEP)",
+      "policy_excerpt": "A director, shareholder or beneficial owner who is, or was within the last 5 years, a PEP triggers enhanced due diligence: source of wealth and source of funds verification and senior management approval of the relationship.",
+      "policy_score": 0.626
+    },
+    {
+      "agent": "screening",
+      "category": "screening",
+      "code": "BLACKLIST",
+      "title": "Internal blacklist match: Bluewater Global Ventures Ltd",
+      "severity": "high",
+      "evidence": "Bluewater Global Ventures Ltd (shareholder 90%) is on the internal blacklist: Previous account closed - unexplained third-party funding (illustrative) (similarity 100%).",
+      "policy_query": "internal blacklist compliance review before new product credit",
+      "policy_doc": "POL-SAN-03",
+      "action": "Compliance review required before any new product or credit.",
+      "policy_ref": "POL-SAN-03 §5. Internal blacklist",
+      "policy_excerpt": "Any match with the internal blacklist requires Compliance review before any new product or credit is granted.",
+      "policy_score": 0.786
+    },
+    {
+      "agent": "transactions",
+      "category": "transactions",
+      "code": "AML-STRUCTURING",
+      "title": "Possible cash structuring",
+      "severity": "high",
+      "evidence": "67 cash deposits between 90,000 and 99,999 MAD (total 6,372,187 MAD) across 3 branch(es); up to 11 within 30 days, threshold breached in 12 month(s).",
+      "policy_query": "cash deposit structuring just below reporting threshold 100,000 MAD several branches",
+      "policy_doc": "POL-AML-02",
+      "action": "Review deposit slips and depositors' identities; Compliance to assess a suspicious transaction report.",
+      "policy_ref": "POL-AML-02 §1. Cash deposit structuring",
+      "policy_excerpt": "Repeated cash deposits just below the internal reporting threshold of 100,000 MAD (between 90,000 and 99,999 MAD) are a typical structuring indicator. Three or more such deposits within any 30-day window must generate an alert. Deposits made across several branches increase the severity.",
+      "policy_score": 0.553
+    },
+    {
+      "agent": "transactions",
+      "category": "transactions",
+      "code": "AML-CASH-INTENSITY",
+      "title": "High cash intensity",
+      "severity": "high",
+      "evidence": "Cash deposits 6,372,187 MAD = 67% of declared revenue (limit 30%).",
+      "policy_query": "cash deposits exceed 30% declared annual revenue origin of funds",
+      "policy_doc": "POL-AML-02",
+      "action": "Obtain justification of the origin of the cash.",
+      "policy_ref": "POL-AML-02 §2. Cash intensity",
+      "policy_excerpt": "When cash deposits exceed 30% of the declared annual revenue of a company whose activity is not normally cash based, the analyst must obtain a justification of the origin of funds.",
+      "policy_score": 0.656
+    },
+    {
+      "agent": "transactions",
+      "category": "transactions",
+      "code": "AML-TURNOVER",
+      "title": "Account credits inconsistent with declared revenue",
+      "severity": "high",
+      "evidence": "12-month credits 24,872,187 MAD = 262% of declared revenue 9,500,000 MAD.",
+      "policy_query": "turnover consistency total account credits exceeding 150% declared annual revenue",
+      "policy_doc": "POL-AML-02",
+      "action": "Obtain supporting documents for the excess inflows.",
+      "policy_ref": "POL-AML-02 §3. Turnover consistency",
+      "policy_excerpt": "Total account credits over 12 months should be consistent with declared revenue. Credits exceeding 150% of declared annual revenue must be explained (shareholder current account contributions, loans, asset sales) with supporting documents.",
+      "policy_score": 0.667
+    },
+    {
+      "agent": "transactions",
+      "category": "transactions",
+      "code": "AML-PASS-THROUGH",
+      "title": "Rapid pass-through of funds",
+      "severity": "high",
+      "evidence": "12 international inflow(s) totalling 18,500,000 MAD were sent out (>= 90%) within 3 days.",
+      "policy_query": "pass-through incoming international transfer followed within 3 days outgoing 90% layering",
+      "policy_doc": "POL-AML-02",
+      "action": "Obtain invoices and contracts linking inflows and outflows.",
+      "policy_ref": "POL-AML-02 §4. Pass-through (rapid movement of funds)",
+      "policy_excerpt": "An incoming international transfer followed within 3 days by outgoing transfers of 90% or more of the amount, with no apparent economic link, is a pass-through indicator often associated with layering.",
+      "policy_score": 0.645
+    },
+    {
+      "agent": "transactions",
+      "category": "transactions",
+      "code": "AML-JURISDICTION",
+      "title": "Flows with high-risk jurisdictions",
+      "severity": "high",
+      "evidence": "British Virgin Islands: 12 transfer(s), 18,500,000 MAD.",
+      "policy_query": "transfers high-risk jurisdictions FATF high-secrecy country risk list counterparty contract invoice",
+      "policy_doc": "POL-AML-02",
+      "action": "Enhanced review of counterparties and underlying contracts.",
+      "policy_ref": "POL-AML-02 §5. High-risk jurisdictions",
+      "policy_excerpt": "Transfers to or from jurisdictions subject to a FATF call for action, or listed as high-secrecy jurisdictions in the bank's country risk list, require enhanced review of the counterparty and the underlying contract or invoice.",
+      "policy_score": 0.642
+    },
+    {
+      "agent": "transactions",
+      "category": "transactions",
+      "code": "AML-ROUND",
+      "title": "High share of round-amount transfers",
+      "severity": "medium",
+      "evidence": "24/36 international transfers (67%) are multiples of 50,000 MAD.",
+      "policy_query": "round-amount transfers multiples of 50,000 MAD without invoices non-commercial",
+      "policy_doc": "POL-AML-02",
+      "action": "Match transfers with commercial invoices.",
+      "policy_ref": "POL-AML-02 §6. Round-amount transfers",
+      "policy_excerpt": "A high proportion of international transfers in round amounts (multiples of 50,000 MAD) without matching invoices is an indicator of non-commercial flows.",
+      "policy_score": 0.659
+    }
+  ],
+  "escalation": {
+    "required": true,
+    "approvals": [
+      "Compliance Officer",
+      "Credit Committee",
+      "Senior management (PEP relationship)"
+    ],
+    "checklist": [
+      {
+        "action": "Look through the ownership chain to the natural persons; escalate to Compliance if not possible.",
+        "reason": "Beneficial owner not identified",
+        "severity": "critical",
+        "policy": "POL-KYC-01 §2. Beneficial owners (UBO)"
+      },
+      {
+        "action": "Credit Committee exception required.",
+        "reason": "Insufficient financial history",
+        "severity": "high",
+        "policy": "POL-CRD-04 §5. Financial history"
+      },
+      {
+        "action": "Credit Committee approval required.",
+        "reason": "Requested exposure large relative to size",
+        "severity": "high",
+        "policy": "POL-CRD-04 §6. Exposure relative to size"
+      },
+      {
+        "action": "Obtain the offshore entity's shareholder register, a certified UBO declaration and the economic rationale.",
+        "reason": "Shareholder in high-secrecy jurisdiction: Bluewater Global Ventures Ltd",
+        "severity": "high",
+        "policy": "POL-KYC-01 §3. Offshore and opaque structures"
+      },
+      {
+        "action": "Perform enhanced due diligence and a site visit.",
+        "reason": "Recently incorporated company",
+        "severity": "high",
+        "policy": "POL-KYC-01 §4. Newly incorporated companies"
+      },
+      {
+        "action": "Request the missing documents before any decision.",
+        "reason": "Incomplete KYC / credit file",
+        "severity": "high",
+        "policy": "POL-KYC-01 §1. Identification of legal entities"
+      },
+      {
+        "action": "Verify source of wealth and source of funds; obtain senior management approval.",
+        "reason": "Politically exposed person: Rachid Ouazzani Kettani",
+        "severity": "high",
+        "policy": "POL-SAN-03 §4. Politically exposed persons (PEP)"
+      },
+      {
+        "action": "Compliance review required before any new product or credit.",
+        "reason": "Internal blacklist match: Bluewater Global Ventures Ltd",
+        "severity": "high",
+        "policy": "POL-SAN-03 §5. Internal blacklist"
+      },
+      {
+        "action": "Review deposit slips and depositors' identities; Compliance to assess a suspicious transaction report.",
+        "reason": "Possible cash structuring",
+        "severity": "high",
+        "policy": "POL-AML-02 §1. Cash deposit structuring"
+      },
+      {
+        "action": "Obtain justification of the origin of the cash.",
+        "reason": "High cash intensity",
+        "severity": "high",
+        "policy": "POL-AML-02 §2. Cash intensity"
+      },
+      {
+        "action": "Obtain supporting documents for the excess inflows.",
+        "reason": "Account credits inconsistent with declared revenue",
+        "severity": "high",
+        "policy": "POL-AML-02 §3. Turnover consistency"
+      },
+      {
+        "action": "Obtain invoices and contracts linking inflows and outflows.",
+        "reason": "Rapid pass-through of funds",
+        "severity": "high",
+        "policy": "POL-AML-02 §4. Pass-through (rapid movement of funds)"
+      },
+      {
+        "action": "Enhanced review of counterparties and underlying contracts.",
+        "reason": "Flows with high-risk jurisdictions",
+        "severity": "high",
+        "policy": "POL-AML-02 §5. High-risk jurisdictions"
+      },
+      {
+        "action": "Require additional guarantees or reduce the exposure.",
+        "reason": "Leverage above risk appetite",
+        "severity": "medium",
+        "policy": "POL-CRD-04 §1. Leverage"
+      },
+      {
+        "action": "Apply sector-specific vigilance.",
+        "reason": "High inherent-risk sector",
+        "severity": "medium",
+        "policy": "POL-KYC-01 §6. Sector inherent risk"
+      },
+      {
+        "action": "Match transfers with commercial invoices.",
+        "reason": "High share of round-amount transfers",
+        "severity": "medium",
+        "policy": "POL-AML-02 §6. Round-amount transfers"
+      }
+    ],
+    "str_assessment_needed": true,
+    "notes": "Compliance must assess whether a suspicious transaction report (déclaration de soupçon) to the ANRF is warranted. Do not inform the customer (no tipping-off)."
+  },
+  "human_decision": {
+    "decision": "PENDING",
+    "reviewer": "not recorded",
+    "comment": ""
+  },
+  "audit_log": [
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "retriever",
+      "action": "loaded company file",
+      "detail": "Sahara Trading & Services SARL: 1 financial years, 103 transactions, 3 documents"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "financial",
+      "action": "computed credit ratios",
+      "detail": "D/E=4.64, CR=1.08, DSCR=2.33"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "kyc",
+      "action": "analysed ownership and KYC file",
+      "detail": "0 UBO(s) identified, 4 missing document(s)"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "screening",
+      "action": "screened parties against watchlists",
+      "detail": "5 parties screened, 2 hit(s)"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "transactions",
+      "action": "ran AML scenarios",
+      "detail": "103 transactions, 6 scenario(s) triggered"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "policy",
+      "action": "retrieved governing policy sections",
+      "detail": "16 finding(s) linked to 16 policy section(s)"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "scoring",
+      "action": "computed risk score",
+      "detail": "score=100, level=High, blocked=True"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "escalation",
+      "action": "prepared compliance escalation",
+      "detail": "16 action(s); approvals: Compliance Officer, Credit Committee, Senior management (PEP relationship); STR assessment: True"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "human_review",
+      "action": "reviewer decision recorded",
+      "detail": "PENDING by not recorded"
+    },
+    {
+      "ts": "2026-10-14T13:47:31+00:00",
+      "agent": "reporter",
+      "action": "wrote report",
+      "detail": "narrative source: template"
+    }
+  ]
+}

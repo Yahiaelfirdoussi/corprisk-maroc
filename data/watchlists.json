@@ -1,0 +1,19 @@
+{
+  "_note": "FICTITIOUS watchlists for demonstration only. In production, connect to your bank's licensed screening provider and official lists (UN Security Council consolidated list, national lists, internal blacklist).",
+  "sanctions": [
+    {"name": "Viktor Aleksandr Dragunov", "list": "DEMO-UN-CONSOLIDATED", "reason": "Asset freeze - illustrative entry", "dob": "1971-05-02"},
+    {"name": "Golden Crescent Shipping LLC", "list": "DEMO-UN-CONSOLIDATED", "reason": "Sanctions evasion - illustrative entry"},
+    {"name": "Ibrahim Al-Masri Haddad", "list": "DEMO-NATIONAL", "reason": "Terrorist financing - illustrative entry"}
+  ],
+  "pep": [
+    {"name": "Rachid Ouazzani Kettani", "position": "Former regional elected official (illustrative)", "country": "MA", "since": "2015", "until": "2021"},
+    {"name": "Samira Bennis Alaoui", "position": "Senior public official (illustrative)", "country": "MA"}
+  ],
+  "internal_blacklist": [
+    {"name": "Bluewater Global Ventures Ltd", "reason": "Previous account closed - unexplained third-party funding (illustrative)"},
+    {"name": "Fast Cash Change SARL", "reason": "Fraud case 2023 (illustrative)"}
+  ],
+  "adverse_media": [
+    {"name": "Menara Prestige Immobilier", "headline": "Illustrative: local press reports buyer complaints over undelivered villas", "severity": "medium"}
+  ]
+}
