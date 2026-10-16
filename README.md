@@ -1,7 +1,7 @@
 # CorpRisk Maroc — Multi-agent corporate due diligence (LangGraph)
 
-A working prototype of an agentic KYC / AML / credit due diligence system for a Moroccan bank,
-inspired by CorpRisk-AI. Upload a company's documents (or pick a demo file): an LLM reads them,
+A working prototype of an agentic KYC / AML / credit due diligence system for a Moroccan bank. 
+Upload a company's documents (or pick a demo file): an LLM reads them,
 a document gate stops the pipeline if anything required is missing, then ten agents collaborate in a
 LangGraph workflow to produce an auditable risk report with policy references.
 
