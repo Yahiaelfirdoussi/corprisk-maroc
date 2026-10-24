@@ -1,150 +1,93 @@
-# CorpRisk Maroc — Multi-agent corporate due diligence (LangGraph)
+# CorpRisk Maroc — AI agents for corporate due diligence
 
-A working prototype of an agentic KYC / AML / credit due diligence system for a Moroccan bank.
-Upload a company's documents (or pick a demo file): an LLM reads them,
-a document gate stops the pipeline if anything required is missing, then ten agents collaborate in a
-LangGraph workflow to produce an auditable risk report with policy references.
+A prototype of an agentic KYC / AML / credit due diligence system for a Moroccan bank.
+Upload a company's documents: an LLM reads them, a document gate stops the process if anything
+required is missing, then ten agents collaborate in a LangGraph workflow to produce an auditable
+risk report in which every finding cites the policy section that requires it.
 
-> **All data is fictitious** (companies, people, ICE/RC numbers, watchlists).
-> The policies in `policies/` separate, for each rule, the **regulatory requirement** (law 43-05, Bank
-> Al-Maghrib circulars and directives, EBA/GL/2020/06, FATF, ECB) from the bank's **internal
-> calibration** (the thresholds the code applies). They are a template: check every reference against
-> the official texts and replace the calibrations with your bank's approved ones. This is decision
-> support: final decisions, and any suspicious transaction report to the ANRF, belong to authorised staff.
+**Live demo:** _add your Render link here_ — the **Demo files** tab runs instantly with no setup.
 
-## Quick start
+> All companies, people, identifiers and watchlists are **fictitious**. This is decision support:
+> final decisions, and any suspicious transaction report to the ANRF, belong to authorised staff.
 
-```bash
-pip install -r requirements.txt
-python run.py --list               # the 4 demo companies
-python run.py --all                # writes reports/C00X.html / .md / .json
-python run.py C003 --interactive   # pauses for your decision at human review
-uvicorn web.server:app --reload   # web interface + API on http://localhost:8000 (docs at /docs)
-pip install -r requirements-dev.txt && pytest -q   # tests (no API key needed)
-```
+## How it works
 
-The demo mode runs fully offline. Reading uploaded documents needs `OPENAI_API_KEY` or `ANTHROPIC_API_KEY`.
-
-## Analyse your own customer file
-
-In the web interface (tab **New analysis**):
-
-1. **Upload** the company's documents (PDF or photos, scans accepted): statuts, modèle J, bilans,
-   attestation fiscale, CNIE/passports, UBO declaration… plus the credit request and, optionally,
-   the 12-month transaction history (CSV, template provided).
-2. **An LLM reads them** in one call (`corprisk/extraction.py`, structured outputs): it classifies each
-   file and extracts the company profile, directors, shareholders, beneficial owners and financials.
-   A cheap model reads first (about $0.01 per file); if it fails, declines, or returns an incomplete
-   result (no company name, a file left unclassified), a stronger model re-reads the file (about $0.20).
-   Works with **OpenAI** (`gpt-6-luna` → `gpt-6.1-sol`, needs `OPENAI_API_KEY`) or **Anthropic**
-   (`claude-haiku-5-5` → `claude-sonnet-5-5`, needs `ANTHROPIC_API_KEY`). Choose with
-   `EXTRACTION_PROVIDER`; override models with `EXTRACTION_MODEL` / `EXTRACTION_FALLBACK_MODEL`.
-3. **You review** everything in editable tables. The agents use the reviewed data, not the raw PDFs.
-4. **Document gate.** The required documents are derived from the file itself (`corprisk/documents.py`):
-   always statuts, a modèle J **under 3 months old**, tax certificate, an ID for every director and a
-   **credit bureau report** on the company and on each resident shareholder holding 25% or more; two
-   years of bilans above 5M MAD; a UBO declaration when a shareholder is a company or a UBO is
-   non-resident; the shareholder register of any offshore shareholder. **If anything is missing the
-   pipeline stops** and lists each
-   document with the reason and the policy section that requires it (downloadable as a request list).
-5. Otherwise the agents run and you get the score, report and, for high risk, the human review step.
-
-Documents are sent to the provider's API (OpenAI or Anthropic). Use fictitious data for demos; for real customer data check
-Compliance / CNDP requirements (law 09-08) first.
+1. **Upload** the customer file: statuts, modèle J, bilans, tax certificate, CNIE/passports, UBO
+   declaration, credit bureau reports (PDF or photos, scans accepted), the credit request and,
+   optionally, a 12-month transaction history (CSV).
+2. **An LLM reads the documents** in one call with structured outputs: it classifies each file and
+   extracts the company profile, directors, shareholders, beneficial owners, financial statements and
+   document dates. A low-cost model reads first; a stronger model re-reads only when the first result
+   fails or looks incomplete.
+3. **You review** the extracted data in editable tables. The agents use the reviewed data, not the PDFs.
+4. **Document gate.** The required documents are derived from the file itself. If anything is missing
+   — for example a modèle J older than 3 months or a credit bureau report — the process **stops** and
+   lists each document to request with the policy section that requires it.
+5. **The agents assess the risk** and return a score, a recommendation and a full report. High-risk
+   files **pause for a human decision** before the report is issued.
 
 ## The agents
 
-| # | Agent | What it does | File |
-|---|---|---|---|
-| 1 | Data retriever | Loads company profile, financials, shareholders, 12 months of transactions | `agents/retriever.py` |
-| 1b | Document gate | Checks the file is complete; stops the pipeline for uploaded files with missing documents | `agents/document_check.py`, `documents.py` |
-| 2 | Screening | Fuzzy-matches company, directors, shareholders, UBOs and counterparties against sanctions, PEP, internal blacklist, adverse media | `agents/screening.py` |
-| 3 | KYC & ownership | Identifies UBOs (≥25%, look-through), offshore structures, company age, sector risk, missing documents | `agents/kyc_ownership.py` |
-| 4 | Financial analysis | Debt/equity, current ratio, DSCR and stressed DSCR (EBITDA −20%, +200 bp), interest cover, debt/EBITDA after the financing (leveraged above 4×), margins, growth, exposure vs revenue | `agents/financial.py` |
-| 5 | Transaction monitoring | Structuring, cash intensity, turnover consistency, pass-through, high-risk jurisdictions, round amounts | `agents/transactions.py` |
-| 6 | Policy (RAG) | Links every finding to the governing internal policy section | `agents/policy.py`, `policy_rag.py` |
-| 7 | Risk scoring | Transparent score 0–100 with per-category caps; blocking issues | `agents/scoring.py` |
-| 8 | Escalation + human review | Compliance checklist, required approvals, STR-assessment flag; **pauses** for a human decision | `agents/escalation.py` |
-| 9 | Report writer | Narrative (template or LLM) + HTML/Markdown/JSON report with audit trail | `agents/reporter.py`, `report.py` |
-
-```
-START → retriever → document gate ─ incomplete? → STOP (list of documents to request)
-                    │
-                    ┬ screening    ┐
-                    ├ kyc          ├→ policy (RAG) → scoring ─ High? ─yes→ escalation → human_review ⏸ → report → END
-                    ├ financial    │                           └─no──────────────────────────────────→ report
-                    └ transactions ┘   (agents 2–5 run in parallel)
-```
-
-## Demo results
-
-| Company | Profile | Result |
+| # | Agent | What it does |
 |---|---|---|
-| C001 Atlas Agro Export (Agadir) | Clean exporter | 0/100 Low → standard due diligence |
-| C002 Detroit Logistique (Tanger) | High leverage, Panama flows | 57/100 Medium → EDD on specific points |
-| C003 Sahara Trading (Casablanca) | Structuring, BVI shareholder with unknown UBO, PEP, pass-through | 100/100 High, **blocked** |
-| C004 Menara Prestige Immobilier (Marrakech) | Shareholder and a counterparty match sanctions list | 87/100 High, **blocked** |
+| 1 | Data retriever | Loads the company file and its transactions |
+| 2 | Document gate | Checks completeness; stops the process when required documents are missing |
+| 3 | Screening | Fuzzy-matches the company, directors, shareholders, UBOs and counterparties against sanctions, PEP, internal blacklist and adverse media lists |
+| 4 | KYC & ownership | Beneficial owners (≥25%, look-through), offshore structures, company age, sector risk |
+| 5 | Financial analysis | Debt/equity, liquidity, DSCR and stressed DSCR (EBITDA −20%, rates +200 bp), interest cover, debt/EBITDA after the financing, growth, exposure vs revenue |
+| 6 | Transaction monitoring | Cash structuring, cash intensity, turnover consistency, pass-through, high-risk jurisdictions, round amounts |
+| 7 | Policy (RAG) | Links every finding to the governing section of the bank's policies |
+| 8 | Risk scoring | Transparent 0–100 score with per-category caps and blocking issues |
+| 9 | Escalation + human review | Compliance checklist and required approvals; pauses for the reviewer's decision |
+| 10 | Report writer | HTML / Markdown / JSON report with a full audit trail |
 
-## Design choices (why banks can accept it)
+```
+upload → LLM reading → human review of the data
+      → retriever → document gate ── incomplete → STOP: list of documents to request
+                                  └─ complete  → screening │ KYC │ financial │ transactions   (in parallel)
+                                               → policy (RAG) → scoring ── high risk → escalation → human decision ⏸
+                                                                        └──────────────────────────────────────→ report
+```
 
-- **Deterministic detection, LLM only for prose.** Every flag comes from an explicit rule with evidence,
-  so results are reproducible and explainable to auditors and Bank Al-Maghrib.
-- **Policy-grounded.** Each finding cites the policy section that requires the action.
-- **Human in the loop.** High-risk files pause (LangGraph `interrupt`) until a reviewer records a decision.
-  The system never files an STR or approves credit by itself.
-- **Audit trail.** Every agent logs what it did; the JSON output can be archived.
-- **Configurable.** All thresholds live in `corprisk/config.py`.
+## Design choices
 
-## Optional LLM narrative
+- **Deterministic detection, LLM only for reading.** Every flag comes from an explicit rule with its
+  evidence, so results are reproducible and explainable to auditors and to the regulator.
+- **Policy-grounded.** The policies in `policies/` state, section by section, the **regulatory
+  requirement** (law 43-05, Bank Al-Maghrib circulars and directives, EBA/GL/2020/06, FATF, ECB) and the
+  bank's **internal calibration** — the thresholds the code applies (`corprisk/config.py`).
+- **Human in the loop.** The system never approves credit or files a report by itself.
+- **Provider-agnostic.** Document reading works with OpenAI or Anthropic models, chosen by configuration.
+
+## Tech stack
+
+Python · LangGraph · FastAPI · OpenAI / Anthropic structured outputs · scikit-learn (TF-IDF policy
+retrieval) · vanilla HTML/CSS/JS front end · Render
+
+## Run locally
 
 ```bash
-# Claude
-pip install anthropic
-export LLM_PROVIDER=anthropic ANTHROPIC_API_KEY=...        # optional: LLM_MODEL=claude-sonnet-5-5
-# Any OpenAI-compatible endpoint: Mistral, Azure, or a model hosted inside the bank (Ollama, vLLM)
-pip install openai
-export LLM_PROVIDER=openai OPENAI_BASE_URL=http://localhost:11434/v1 OPENAI_API_KEY=ollama LLM_MODEL=qwen2.5
-export REPORT_LANGUAGE=French                               # English / French / Arabic
+pip install -r requirements.txt
+export OPENAI_API_KEY=...            # only needed to read uploaded documents; demo files work without it
+uvicorn web.server:app --reload      # http://localhost:8000 — API docs at /docs
 ```
 
-If the LLM fails, the template narrative is used automatically. For real customer data, check with
-Compliance / CNDP requirements (law 09-08) and prefer an on-premise model or an approved hosting region.
+| Variable | Purpose |
+|---|---|
+| `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | Reads uploaded documents |
+| `EXTRACTION_PROVIDER` | `openai` or `anthropic` (default: whichever key is set) |
+| `EXTRACTION_MODEL`, `EXTRACTION_FALLBACK_MODEL` | Override the reading models |
+| `APP_PASSWORD` | Protects the upload mode, which spends API credits |
 
-## Deploy
+**Deploy on Render:** New → Blueprint → select this repository; `render.yaml` configures the service.
 
-**Render:** New → Blueprint → pick this repo. `render.yaml` sets up a free web service running the
-web app (`uvicorn web.server:app`, health check `/api/health`). Render asks for two secrets:
-`OPENAI_API_KEY` (reads uploaded documents) and `APP_PASSWORD` (protects the upload mode, since it
-spends API credits and the URL is public). To use Claude instead, set `EXTRACTION_PROVIDER=anthropic`,
-clear the two model variables and add `ANTHROPIC_API_KEY`. Set `LLM_PROVIDER=anthropic` (or `openai` + `LLM_MODEL`) to also have an LLM write the
-report narrative.
+## Limitations and path to production
 
-**Railway:** New Project → Deploy from GitHub repo; the `Procfile` provides the start command.
-
-Note: the free tier sleeps when idle, so the first request after a pause takes ~30–60 s.
-
-## Path to production
-
-1. **Data:** replace `data_access.py` with read-only queries to the core banking system / data warehouse,
-   OMPIC register extracts and the licensed screening provider (UN consolidated list, national list).
-2. **Screening:** use a dedicated engine (Arabic/Latin transliteration, aliases, DOB matching).
-3. **Policies:** load the bank's real procedures; move from TF-IDF to an internal embedding model + vector DB.
-4. **Scenarios:** calibrate thresholds on historical alerts with the AML team (reduce false positives).
-5. **Persistence:** swap `InMemorySaver` for a Postgres/SQLite checkpointer so paused reviews survive restarts.
-6. **Governance:** model validation, access control (RBAC), PII masking, monitoring, periodic back-testing.
-
-## Project structure
-
-```
-corprisk_maroc/
-├── run.py · generate_data.py · generate_samples.py · requirements.txt
-├── web/           server.py (FastAPI) + static/ (index.html, app.js, styles.css)
-├── data/          companies.json, transactions.csv, watchlists.json, templates/   (fictitious)
-├── policies/      POL-KYC-01, POL-AML-02, POL-SAN-03, POL-CRD-04, POL-CRD-05   (regulatory basis + internal calibration)
-├── corprisk/      config, state, graph, documents, extraction, data_access, name_matching, policy_rag, llm, report
-│   └── agents/    retriever, document_check, screening, kyc_ownership, financial, transactions, policy, scoring,
-│                  escalation, reporter
-├── sample_files/  three fictitious customer files to upload
-├── tests/         pytest (no API key needed)
-└── reports/       generated reports
-```
+- **Data:** connect the core banking system, the commercial register and a licensed screening provider.
+- **Screening:** use a dedicated engine (Arabic/Latin transliteration, aliases, date-of-birth matching).
+- **Policies:** check every regulatory reference against the official texts and use the bank's
+  approved calibrations; move from TF-IDF to an embedding model.
+- **Persistence:** paused reviews are kept in memory; use a database-backed checkpointer.
+- **Governance:** model validation, access control, PII masking, monitoring, back-testing.
+- **Data protection:** documents are sent to the LLM provider; for real customer data, check
+  Compliance and CNDP requirements (law 09-08) and prefer an approved hosting region or on-premise model.

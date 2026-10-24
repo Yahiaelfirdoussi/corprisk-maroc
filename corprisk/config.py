@@ -8,7 +8,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 POLICY_DIR = ROOT / "policies"
-REPORT_DIR = ROOT / "reports"
 
 # --- Transaction monitoring (POL-AML-02) -----------------------------------
 CASH_THRESHOLD_MAD = 100_000
