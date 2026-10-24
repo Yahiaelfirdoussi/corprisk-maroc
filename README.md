@@ -5,7 +5,8 @@ Upload a company's documents: an LLM reads them, a document gate stops the proce
 required is missing, then ten agents collaborate in a LangGraph workflow to produce an auditable
 risk report in which every finding cites the policy section that requires it.
 
-**Live demo:** _add your Render link here_ — the **Demo files** tab runs instantly with no setup.
+**Live demo: [corprisk-maroc.onrender.com](https://corprisk-maroc.onrender.com)** — the **Demo files** tab runs instantly with no setup
+(the free server sleeps when idle: the first visit can take up to a minute).
 
 > All companies, people, identifiers and watchlists are **fictitious**. This is decision support:
 > final decisions, and any suspicious transaction report to the ANRF, belong to authorised staff.
