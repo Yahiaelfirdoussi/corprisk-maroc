@@ -30,7 +30,7 @@ FALLBACK_MODELS = {"claude-fable-5-1", "claude-opus-5-5", "claude-opus-5", "clau
 MEDIA_TYPES = {"pdf": "application/pdf", "png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg"}
 
 DocType = Literal["statuts", "modele_J", "attestation_fiscale", "bilan", "id_document", "declaration_ubo",
-                  "registre_actionnaires", "rapport_solvabilite", "other"]
+                  "registre_actionnaires", "rapport_solvabilite", "demande_credit", "other"]
 Sector = Literal[tuple(SECTOR_RISK) + ("other",)]  # type: ignore[valid-type]
 
 
@@ -95,13 +95,16 @@ class Extraction(BaseModel):
     directors: list[Person]
     shareholders: list[Shareholder]
     financials: list[FinancialYear]
+    requested_amount: float | None = Field(description="Amount asked for in the credit request letter "
+                                                       "(demande de crédit), MAD; null if no letter")
+    requested_product: str = Field(description="Credit product named in the request letter; empty if none")
     documents: list[DocumentInfo] = Field(description="Exactly one entry per file provided")
     warnings: list[str] = Field(description="Unreadable pages, inconsistencies between documents, doubts")
 
 
 SYSTEM_PROMPT = """You are a KYC analyst at a Moroccan bank. You receive the documents of a corporate \
 customer file (statuts, modèle J, bilans, tax certificate, identity documents, UBO declarations, \
-credit bureau reports...), \
+credit bureau reports, credit request letter...), \
 in French, Arabic or English, sometimes scanned.
 
 1. Classify every file (one `documents` entry per file, using the file index you are given).
@@ -335,6 +338,8 @@ def to_company(ex: Extraction, files: list[str], requested_product: str, request
         "directors": [p.model_dump() for p in ex.directors],
         "shareholders": [s.model_dump() for s in ex.shareholders],
         "financials": {str(f.year): f.model_dump(exclude={"year"}) for f in ex.financials},
+        "declared_amount_mad": ex.requested_amount,
+        "declared_product": ex.requested_product,
         "documents_on_file": sorted(set(docs)),
         "document_dates": dates,
         "source_files": files,

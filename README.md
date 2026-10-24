@@ -13,9 +13,9 @@ risk report in which every finding cites the policy section that requires it.
 
 ## How it works
 
-1. **Upload** the customer file: statuts, modèle J, bilans, tax certificate, CNIE/passports, UBO
-   declaration, credit bureau reports (PDF or photos, scans accepted), the credit request and,
-   optionally, a 12-month transaction history (CSV).
+1. **Upload** the customer file: the client's credit request letter, statuts, modèle J, bilans, tax
+   certificate, CNIE/passports, UBO declaration, credit bureau reports (PDF or photos, scans accepted),
+   the amount to analyse and, optionally, a 12-month transaction history (CSV).
 2. **An LLM reads the documents** in one call with structured outputs: it classifies each file and
    extracts the company profile, directors, shareholders, beneficial owners, financial statements and
    document dates. A low-cost model reads first; a stronger model re-reads only when the first result
@@ -23,7 +23,8 @@ risk report in which every finding cites the policy section that requires it.
 3. **You review** the extracted data in editable tables. The agents use the reviewed data, not the PDFs.
 4. **Document gate.** The required documents are derived from the file itself. If anything is missing
    — for example a modèle J older than 3 months or a credit bureau report — the process **stops** and
-   lists each document to request with the policy section that requires it.
+   lists each document to request with the policy section that requires it. It also stops when the
+   amount entered does not match the amount in the client's credit request letter.
 5. **The agents assess the risk** and return a score, a recommendation and a full report. High-risk
    files **pause for a human decision** before the report is issued.
 

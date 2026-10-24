@@ -214,6 +214,14 @@ function renderReview() {
         <label class="field">Sector<select data-company="sector">${cfg.sectors.map((s) => `<option ${s === R.company.sector ? "selected" : ""}>${esc(s)}</option>`).join("")}</select></label>
       </div>
     </div>
+    <div class="card"><h2>Credit request letter</h2>
+      <div class="grid-3">
+        <label class="field">Amount in the letter (MAD)<input type="text" inputmode="decimal" class="num-input" id="letter-amount" value="${esc(fmtNum(R.company.requested_amount))}"></label>
+        <label class="field">Product in the letter<input type="text" data-company="requested_product" value="${esc(R.company.requested_product)}"></label>
+        <label class="field">Amount entered for the analysis<input type="text" class="num-input" value="${esc(fmtNum(amountValue()))}" disabled></label>
+      </div>
+      <div class="muted small" style="margin-top:8px">If the two amounts differ, the analysis stops until the amount is confirmed with the client.</div>
+    </div>
     <div class="grid-2">
       <div class="card"><h2>Directors / legal representatives</h2><div id="t-dirs"></div></div>
       <div class="card"><h2>Shareholders</h2><div id="t-sh"></div></div>
@@ -256,6 +264,7 @@ function renderReview() {
   $("#step-2").oninput = (e) => {
     const k = e.target.dataset.company;
     if (k) R.company[k] = e.target.value;
+    if (e.target.id === "letter-amount") R.company.requested_amount = parseNum(e.target.value);
   };
   $("#btn-back-1").onclick = () => setStep(1);
   $("#btn-run").onclick = runAnalysis;
@@ -326,25 +335,30 @@ function renderOutcome(el, out, { onBack } = {}) {
 }
 
 function renderStopped(el, out, onBack) {
-  const miss = out.intake.missing;
-  const letter = [`Documents to request from ${out.company.name}:`, "",
+  const miss = out.intake.missing, issues = out.intake.issues || [];
+  const letter = [`Points to resolve with ${out.company.name}:`, "",
+    ...issues.map((m) => `- ${m.label}: ${m.reason}`),
     ...miss.map((m) => `- ${m.label} (${m.reason} ${m.policy})`)].join("\n");
+  const item = (m) => `<div class="missing-item"><span class="x">×</span>
+    <div><b>${esc(m.label)}</b><div class="muted small">${esc(m.reason)}</div></div><span class="ref">${esc(m.policy)}</span></div>`;
+  const what = [miss.length ? `${miss.length} document(s) must be provided` : "",
+                issues.length ? `${issues.length} inconsistency(ies) must be resolved` : ""].filter(Boolean).join(" and ");
   el.innerHTML = `
     <div class="card" style="border-color:var(--high)">
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div class="x" style="width:40px;height:40px;font-size:20px">!</div>
-        <div><h2 style="margin-bottom:4px">Analysis stopped — the file is incomplete</h2>
-          <div class="muted">${esc(out.company.name)} · ${miss.length} document(s) must be provided before the agents can run.</div></div>
+        <div><h2 style="margin-bottom:4px">Analysis stopped — the file is ${miss.length ? "incomplete" : "inconsistent"}</h2>
+          <div class="muted">${esc(out.company.name)} · ${what} before the agents can run.</div></div>
       </div>
     </div>
-    <div class="card"><h2>Documents to request</h2>
-      ${miss.map((m) => `<div class="missing-item"><span class="x">×</span>
-        <div><b>${esc(m.label)}</b><div class="muted small">${esc(m.reason)}</div></div><span class="ref">${esc(m.policy)}</span></div>`).join("")}
+    ${issues.length ? `<div class="card" style="border-color:var(--medium)"><h2>Inconsistencies to resolve</h2>${issues.map(item).join("")}</div>` : ""}
+    <div class="card"><h2>${miss.length ? "Documents to request" : "Next step"}</h2>
+      ${miss.length ? miss.map(item).join("") : `<div class="muted">All required documents are on file.</div>`}
       ${out.intake.notes.map((n) => `<div class="banner warn small" style="margin-top:12px">${esc(n)}</div>`).join("")}
       <div class="actions">
         <button class="btn" data-copy>Copy request list</button>
         <button class="btn" data-dl>Download as text</button>
-        ${onBack ? `<button class="btn primary" data-back>Add documents →</button>` : ""}
+        ${onBack ? `<button class="btn primary" data-back>${miss.length ? "Add documents →" : "Back to upload →"}</button>` : ""}
       </div>
     </div>`;
   el.querySelector("[data-copy]").onclick = () => navigator.clipboard.writeText(letter).then(() => toast("Copied."));

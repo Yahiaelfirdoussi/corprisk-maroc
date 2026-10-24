@@ -4,6 +4,7 @@ Every requirement cites the policy section that imposes it. Document codes are
 plain strings stored in company["documents_on_file"]:
 
   statuts, modele_J, attestation_fiscale, declaration_ubo   one per file
+  demande_credit                                             the client's credit request letter
   rapport_solvabilite                                        credit bureau report on the borrower
   bilan_<year>                                               e.g. bilan_2025
   id:<holder name>                                           CNIE or passport of a person
@@ -29,6 +30,7 @@ DOC_TYPES = {
     "declaration_ubo": "Déclaration des bénéficiaires effectifs (UBO declaration)",
     "registre_actionnaires": "Shareholder register of a corporate shareholder",
     "rapport_solvabilite": "Rapport de solvabilité (credit bureau report)",
+    "demande_credit": "Demande de crédit (credit request letter)",
     "other": "Other document",
 }
 NAME_MATCH = 0.85  # how close a name on an ID / register must be to the person or entity
@@ -106,6 +108,8 @@ def required_documents(company: dict, as_of: date, strict: bool = True) -> list[
                 reqs.append(Requirement(f"registre:{s['name']}", f"Shareholder register of {s['name']}",
                                         f"{s['name']} is incorporated in {HIGH_SECRECY[s['country']]}.",
                                         "POL-KYC-01 §3"))
+        reqs.append(Requirement("demande_credit", DOC_TYPES["demande_credit"],
+                                "Written request stating the amount and purpose of the credit.", "POL-KYC-01 §7"))
         reqs.append(Requirement("rapport_solvabilite", f"{DOC_TYPES['rapport_solvabilite']} on the company",
                                 "Required before granting any credit.", "POL-CRD-05 §3"))
         # Moroccan credit bureaux only cover residents: foreign shareholders are left to the analyst
@@ -132,6 +136,19 @@ def modele_j_age(company: dict, as_of: date) -> tuple[str | None, bool]:
         return issued, date.fromisoformat(issued) < as_of - relativedelta(months=MODELE_J_MAX_AGE_MONTHS)
     except ValueError:
         return None, False
+
+
+def request_issues(company: dict) -> list[Requirement]:
+    """Inconsistencies between the credit request letter and the amount entered for the analysis."""
+    declared, entered = company.get("declared_amount_mad"), company.get("requested_amount_mad", 0)
+    if "demande_credit" not in company.get("documents_on_file", []) or declared is None:
+        return []
+    if abs(declared - entered) >= 1:
+        return [Requirement("AMOUNT-MISMATCH", "Requested amount does not match the credit request letter",
+                            f"The letter asks for {declared:,.0f} MAD but the analysis was started for "
+                            f"{entered:,.0f} MAD. Confirm the amount with the client before any analysis.",
+                            "POL-KYC-01 §7")]
+    return []
 
 
 def missing_documents(company: dict, as_of: date, strict: bool = True) -> list[Requirement]:

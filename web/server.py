@@ -149,7 +149,7 @@ OPTIONAL_FINANCIAL_FIELDS = {"interest_expense": None, "financial_debt": None, "
 
 
 def _with_defaults(extraction: dict) -> dict:
-    return {**extraction,
+    return {"requested_amount": None, "requested_product": "", **extraction,
             "warnings": extraction.get("warnings", []),
             "documents": [{**OPTIONAL_DOCUMENT_FIELDS, **d} for d in extraction.get("documents", [])],
             "financials": [{**OPTIONAL_FINANCIAL_FIELDS, **f} for f in extraction.get("financials", [])]}
