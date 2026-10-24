@@ -16,6 +16,7 @@ Endpoints that spend API credits (extract, run, review) require the X-App-Passwo
 when APP_PASSWORD is set. Paused reviews and drafts live in memory: one process, lost on
 restart (use a persistent LangGraph checkpointer for production).
 """
+import hashlib
 import hmac
 import os
 import uuid
@@ -25,7 +26,7 @@ from pathlib import Path
 from typing import Literal
 
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from langgraph.types import Command
 from pydantic import BaseModel, ValidationError
@@ -142,6 +143,18 @@ def extract_documents(files: list[UploadFile] = File(...),
             "transactions": n_txns, "extraction": ex.model_dump()}
 
 
+# Fields added after the first release: filled in when an older page (cached script) omits them.
+OPTIONAL_DOCUMENT_FIELDS = {"issued": "", "summary": "", "holder": "", "year": None}
+OPTIONAL_FINANCIAL_FIELDS = {"interest_expense": None, "financial_debt": None, "annual_debt_service": None}
+
+
+def _with_defaults(extraction: dict) -> dict:
+    return {**extraction,
+            "warnings": extraction.get("warnings", []),
+            "documents": [{**OPTIONAL_DOCUMENT_FIELDS, **d} for d in extraction.get("documents", [])],
+            "financials": [{**OPTIONAL_FINANCIAL_FIELDS, **f} for f in extraction.get("financials", [])]}
+
+
 class RunRequest(BaseModel):
     draft_id: str
     extraction: dict
@@ -155,7 +168,7 @@ def run_upload(req: RunRequest) -> dict:
     if not draft:
         raise HTTPException(404, "This draft has expired; upload the documents again.")
     try:
-        reviewed = Extraction.model_validate(req.extraction)
+        reviewed = Extraction.model_validate(_with_defaults(req.extraction))
         if reviewed.incorporation_date:
             date.fromisoformat(reviewed.incorporation_date)
     except (ValidationError, ValueError) as e:
@@ -190,6 +203,18 @@ def review(thread_id: str, req: ReviewRequest) -> dict:
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
 
 
+def _versioned_index() -> str:
+    """index.html with ?v=<content hash> on the script and stylesheet, so browsers never run a stale copy."""
+    html = (STATIC / "index.html").read_text(encoding="utf-8")
+    for asset in ("app.js", "styles.css"):
+        digest = hashlib.sha256((STATIC / asset).read_bytes()).hexdigest()[:10]
+        html = html.replace(f"/static/{asset}", f"/static/{asset}?v={digest}")
+    return html
+
+
+INDEX_HTML = _versioned_index()
+
+
 @app.get("/", include_in_schema=False)
-def index() -> FileResponse:
-    return FileResponse(STATIC / "index.html")
+def index() -> HTMLResponse:
+    return HTMLResponse(INDEX_HTML, headers={"Cache-Control": "no-cache"})
