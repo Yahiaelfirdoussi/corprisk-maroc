@@ -1,6 +1,7 @@
 """Agent 4 - Financial analysis: ratios against the credit risk appetite."""
-from ..config import (LARGE_REQUEST_MAD, MAX_DEBT_TO_EQUITY, MAX_EXPOSURE_TO_REVENUE,
-                      MIN_CURRENT_RATIO, MIN_DSCR, UNUSUAL_GROWTH)
+from ..config import (LARGE_REQUEST_MAD, LEVERAGED_DEBT_TO_EBITDA, MAX_DEBT_TO_EBITDA, MAX_DEBT_TO_EQUITY,
+                      MAX_EXPOSURE_TO_REVENUE, MIN_CURRENT_RATIO, MIN_DSCR, MIN_INTEREST_COVER, STRESS_EBITDA_CUT,
+                      STRESS_RATE_BPS, UNUSUAL_GROWTH)
 from ..state import DDState, log
 
 
@@ -39,7 +40,18 @@ def financial_agent(state: DDState) -> dict:
         "net_margin": _ratio(y.get("net_income"), y.get("revenue"), 3),
         "exposure_to_revenue": _ratio(c["requested_amount_mad"], y.get("revenue"), 2),
         "revenue_growth": None,
+        "interest_cover": None, "debt_to_ebitda": None, "stressed_dscr": None,
     }
+    # ratios that need interest expense and financial debt (read from uploaded statements)
+    ebitda, request = y.get("ebitda"), c["requested_amount_mad"]
+    debt_after = (y["financial_debt"] + request) if y.get("financial_debt") is not None else None
+    if ebitda and ebitda > 0:
+        ratios["interest_cover"] = _ratio(ebitda, y.get("interest_expense"), 2)
+        ratios["debt_to_ebitda"] = _ratio(debt_after, ebitda, 2)
+        if y.get("annual_debt_service") is not None and debt_after is not None:
+            extra_interest = debt_after * STRESS_RATE_BPS / 10_000
+            ratios["stressed_dscr"] = _ratio(ebitda * (1 - STRESS_EBITDA_CUT),
+                                             y["annual_debt_service"] + extra_interest, 2)
     if len(years) >= 2:
         growth = _ratio(y.get("revenue"), fin[years[-2]].get("revenue"), 3)
         ratios["revenue_growth"] = round(growth - 1, 3) if growth is not None else None
@@ -87,6 +99,27 @@ def financial_agent(state: DDState) -> dict:
                            f"Request = {ratios['exposure_to_revenue']:.0%} of annual revenue (limit {MAX_EXPOSURE_TO_REVENUE:.0%}).",
                            "exposure relative to size 50% annual revenue credit committee",
                            "Credit Committee approval required."))
+
+    if ratios["interest_cover"] is not None and ratios["interest_cover"] < MIN_INTEREST_COVER:
+        findings.append(_f("FIN-INTEREST-COVER", "Weak interest coverage", "medium",
+                           f"EBITDA / interest expense = {ratios['interest_cover']} (minimum {MIN_INTEREST_COVER}).",
+                           "interest coverage ratio EBITDA interest expense at least 3.0",
+                           "Strengthen guarantees or reduce the exposure."))
+    if ratios["debt_to_ebitda"] is not None and ratios["debt_to_ebitda"] > LEVERAGED_DEBT_TO_EBITDA:
+        outside = ratios["debt_to_ebitda"] > MAX_DEBT_TO_EBITDA
+        findings.append(_f("FIN-LEVERAGED", "Leveraged transaction" + (" outside risk appetite" if outside else ""),
+                           "high" if outside else "medium",
+                           f"Financial debt after the financing / EBITDA = {ratios['debt_to_ebitda']} "
+                           f"(leveraged above {LEVERAGED_DEBT_TO_EBITDA}, outside appetite above {MAX_DEBT_TO_EBITDA}).",
+                           "total financial debt EBITDA leveraged transaction 4.0 6.0 Chief Risk Officer",
+                           "Credit Committee and Chief Risk Officer approval required." if outside
+                           else "Treat as a leveraged transaction; check repayment of at least 50% of debt in 5-7 years."))
+    if ratios["stressed_dscr"] is not None and ratios["stressed_dscr"] < 1.0:
+        findings.append(_f("FIN-STRESS", "Repayment fails the stress test", "medium",
+                           f"DSCR {ratios['stressed_dscr']} with EBITDA -{STRESS_EBITDA_CUT:.0%} and rates "
+                           f"+{STRESS_RATE_BPS} bp on {debt_after:,.0f} MAD of financial debt (minimum 1.0).",
+                           "sensitivity analysis DSCR recomputed EBITDA reduced 20% interest rates 200 basis points",
+                           "Require additional guarantees or reduce the exposure."))
 
     return {
         "findings": findings,

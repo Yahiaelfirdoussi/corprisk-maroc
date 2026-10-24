@@ -151,7 +151,8 @@ const FIN_ROWS = [
   ["revenue", "Revenue (chiffre d'affaires)"], ["ebitda", "EBITDA (EBE)"], ["net_income", "Net income"],
   ["total_assets", "Total assets"], ["total_liabilities", "Total liabilities (excl. equity)"], ["equity", "Equity"],
   ["current_assets", "Current assets (incl. cash)"], ["current_liabilities", "Current liabilities (incl. overdraft)"],
-  ["annual_debt_service", "Annual debt service"],
+  ["annual_debt_service", "Annual debt service"], ["interest_expense", "Interest expense"],
+  ["financial_debt", "Financial debt (incl. overdraft)"],
 ];
 
 function cell(col, value, attrs) {
@@ -193,7 +194,7 @@ function renderReview() {
   state.review = {
     company: { ...ex },
     documents: d.file_names.map((name, i) => ({ file: name, doc_type: byIndex[i]?.doc_type ?? "other", year: byIndex[i]?.year ?? null,
-      holder: byIndex[i]?.holder ?? "", summary: byIndex[i]?.summary ?? "Not classified", file_index: i })),
+      holder: byIndex[i]?.holder ?? "", issued: byIndex[i]?.issued ?? "", summary: byIndex[i]?.summary ?? "Not classified", file_index: i })),
     directors: ex.directors.map((x) => ({ ...x })),
     shareholders: ex.shareholders.map(({ ubos, ...s }) => ({ ...s })),
     ubos: ex.shareholders.flatMap((s) => s.ubos.map((u) => ({ shareholder: s.name, ...u }))),
@@ -228,7 +229,8 @@ function renderReview() {
     { key: "file", label: "File", readonly: true },
     { key: "doc_type", label: "Type", type: "select", options: docTypes },
     { key: "year", label: "Year (bilan)", type: "number" },
-    { key: "holder", label: "Person / entity (ID, register)" },
+    { key: "holder", label: "Person / entity (ID, register, credit report)" },
+    { key: "issued", label: "Issued (YYYY-MM-DD)" },
     { key: "summary", label: "What the AI saw", readonly: true },
   ], R.documents, { removable: false });
   editableTable($("#t-dirs"), [
@@ -437,6 +439,9 @@ function renderDone(el, out, onBack) {
             <tr><td>Debt / equity</td><td class="num">${fr.debt_to_equity ?? "—"}</td></tr>
             <tr><td>Current ratio</td><td class="num">${fr.current_ratio ?? "—"}</td></tr>
             <tr><td>DSCR</td><td class="num">${fr.dscr ?? "—"}</td></tr>
+            <tr><td>Stressed DSCR (EBITDA −20%, +200 bp)</td><td class="num">${fr.stressed_dscr ?? "—"}</td></tr>
+            <tr><td>Interest coverage</td><td class="num">${fr.interest_cover ?? "—"}</td></tr>
+            <tr><td>Financial debt / EBITDA (after financing)</td><td class="num">${fr.debt_to_ebitda ?? "—"}</td></tr>
             <tr><td>Net margin</td><td class="num">${pct(fr.net_margin, 1)}</td></tr>
             <tr><td>Cash deposits / revenue</td><td class="num">${tx.count ? pct(tx.cash_ratio) : "—"}</td></tr>
             <tr><td>Account credits / revenue</td><td class="num">${tx.count ? pct(tx.turnover_ratio) : "—"}</td></tr>

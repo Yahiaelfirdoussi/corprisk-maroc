@@ -5,7 +5,7 @@ and the user receives the list of documents to request, each with the policy tha
 requires it. For demo files the gate only records the result; the KYC agent then
 reports missing documents as a finding.
 """
-from ..documents import missing_documents, required_documents
+from ..documents import missing_documents, modele_j_age, required_documents
 from ..state import DDState, analysis_date, log
 
 
@@ -20,6 +20,8 @@ def document_check_agent(state: DDState) -> dict:
                      "may be required once the statuts and modèle J are provided.")
     if not company.get("directors"):
         notes.append("No directors could be identified; identity documents of the directors will be required.")
+    if "modele_J" in company.get("documents_on_file", []) and modele_j_age(company, as_of)[0] is None:
+        notes.append("The date of the modèle J could not be read: check that it is less than 3 months old.")
     stop = bool(state.get("enforce_documents")) and bool(missing)
     intake = {
         "status": "incomplete" if missing else "complete",

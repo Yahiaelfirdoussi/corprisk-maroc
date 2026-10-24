@@ -52,7 +52,8 @@ def render_markdown(state: dict) -> str:
         "",
         "## 5. Key financials",
         f"Year {fr.get('year')}: revenue {_mad((fr.get('revenue') or 0))}, debt/equity {fr.get('debt_to_equity')}, "
-        f"current ratio {fr.get('current_ratio')}, DSCR {fr.get('dscr')}, net margin {(fr.get('net_margin') or 0):.1%}, "
+        f"current ratio {fr.get('current_ratio')}, DSCR {fr.get('dscr')} (stressed {fr.get('stressed_dscr')}), "
+        f"interest cover {fr.get('interest_cover')}, debt/EBITDA {fr.get('debt_to_ebitda')}, net margin {(fr.get('net_margin') or 0):.1%}, "
         f"request/revenue {(fr.get('exposure_to_revenue') or 0):.0%}.",
         "",
         "## 6. Transaction profile (12 months)",
@@ -162,7 +163,8 @@ table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;padding:8px 6
 <section class="card"><h2>Key figures</h2><table>
 <tr><td>Revenue {e(str(fr.get('year')))}</td><td class="num">{_mad((fr.get('revenue') or 0))}</td></tr>
 <tr><td>Debt / equity</td><td class="num">{fr.get('debt_to_equity')}</td></tr><tr><td>Current ratio</td><td class="num">{fr.get('current_ratio')}</td></tr>
-<tr><td>DSCR</td><td class="num">{fr.get('dscr')}</td></tr><tr><td>Request / revenue</td><td class="num">{(fr.get('exposure_to_revenue') or 0):.0%}</td></tr>
+<tr><td>DSCR</td><td class="num">{fr.get('dscr')}</td></tr><tr><td>Stressed DSCR</td><td class="num">{fr.get('stressed_dscr')}</td></tr>
+<tr><td>Interest coverage</td><td class="num">{fr.get('interest_cover')}</td></tr><tr><td>Debt / EBITDA (after financing)</td><td class="num">{fr.get('debt_to_ebitda')}</td></tr><tr><td>Request / revenue</td><td class="num">{(fr.get('exposure_to_revenue') or 0):.0%}</td></tr>
 <tr><td>Cash deposits / revenue</td><td class="num">{(tx.get('cash_ratio') or 0):.0%}</td></tr><tr><td>Credits / revenue</td><td class="num">{(tx.get('turnover_ratio') or 0):.0%}</td></tr>
 </table></section></div>
 {esc_html}

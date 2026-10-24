@@ -2,8 +2,10 @@
 
 Run:  pip install -r requirements-dev.txt && python generate_samples.py
 Writes sample_files/<scenario>/ : PDFs (statuts, modèle J, bilans, attestation fiscale,
-UBO declaration, shareholder register), PNG identity cards marked SPECIMEN, and a
-12-month transactions CSV. Every company, person and number is invented; names that
+UBO declaration, shareholder register, credit bureau reports), PNG identity cards marked
+SPECIMEN, and a 12-month transactions CSV. The modèle J and certificates are dated 20 days
+before the run date: the policy wants a modèle J under 3 months old, so regenerate the files
+when they get older than that. Every company, person and number is invented; names that
 match data/watchlists.json are deliberate (they are fictitious watchlist entries).
 """
 import csv
@@ -15,6 +17,7 @@ from fpdf import FPDF
 from PIL import Image, ImageDraw, ImageFont
 
 OUT = Path(__file__).parent / "sample_files"
+ISSUED = (date.today() - timedelta(days=20)).isoformat()
 BANNER = "DOCUMENT FICTIF - FICTITIOUS TEST DOCUMENT"
 
 
@@ -105,7 +108,7 @@ def modele_j(path, c):
               f"Date d'immatriculation : {c['incorporated']}",
               f"Activité : {c['activity']}",
               f"Gérant : {c['manager']}, nationalité marocaine",
-              "Extrait délivré le 2026-09-01."]),
+              f"Extrait délivré le {ISSUED}."]),
     ])
 
 
@@ -113,8 +116,23 @@ def attestation(path, c):
     pdf(path, "ATTESTATION DE RÉGULARITÉ FISCALE", [
         ("", ["Direction Générale des Impôts (fictif) - Direction régionale de " + c["city"],
               f"Il est attesté que la société {c['name']}, ICE {c['ice']}, identifiant fiscal "
-              f"{c['if']}, est en situation fiscale régulière à la date du 2026-08-20.",
+              f"{c['if']}, est en situation fiscale régulière à la date du {ISSUED}.",
               "Cette attestation est valable trois mois à compter de sa date de délivrance."]),
+    ])
+
+
+def bureau_report(path, subject, identifier, exposure):
+    """Credit bureau solvency report from an obviously fictitious bureau."""
+    pdf(path, "RAPPORT DE SOLVABILITÉ", [
+        ("", ["Bureau de crédit FICTIF (exemple de test, aucun lien avec un bureau agréé)",
+              f"Date du rapport : {ISSUED}",
+              f"Sujet : {subject}",
+              f"Identifiant : {identifier}"]),
+        ("Engagements bancaires déclarés", [f"  Encours total : {exposure:,} MAD".replace(",", " "),
+                                            "  Nombre d'établissements prêteurs : 2"]),
+        ("Incidents", ["  Impayés de plus de 30 jours : aucun",
+                       "  Crédits restructurés : aucun",
+                       "  Créances en souffrance : aucune"]),
     ])
 
 
@@ -199,6 +217,9 @@ def scenario_complete(rng):
     for y, f in clean_financials().items():
         bilan(d / f"bilan_{y}.pdf", c, y, f)
     id_card(d / "cnie_gerant.png", "Youssef Fictif Alami", "XF000001", "1975-04-12")
+    bureau_report(d / "rapport_solvabilite_societe.pdf", c["name"], f"ICE {c['ice']}", 10_200_000)
+    bureau_report(d / "rapport_solvabilite_youssef_alami.pdf", "Youssef Fictif Alami", "CNIE XF000001", 450_000)
+    bureau_report(d / "rapport_solvabilite_leila_berrada.pdf", "Leila Fictive Berrada", "CNIE XF000002", 0)
     transactions(d / "transactions_12_months.csv", clean_transactions(rng))
 
 
@@ -242,6 +263,9 @@ def scenario_high_risk(rng):
     for y, f in fin.items():
         bilan(d / f"bilan_{y}.pdf", c, y, f)
     id_card(d / "cnie_gerante.png", "Samira Bennis Alaoui", "XF000003", "1968-09-30")
+    bureau_report(d / "rapport_solvabilite_societe.pdf", c["name"], f"ICE {c['ice']}", 5_900_000)
+    bureau_report(d / "rapport_solvabilite_samira_bennis_alaoui.pdf", "Samira Bennis Alaoui", "CNIE XF000003",
+                  1_200_000)
     pdf(d / "declaration_beneficiaires_effectifs.pdf", "DÉCLARATION DES BÉNÉFICIAIRES EFFECTIFS", [
         ("", [f"Société déclarante : {c['name']} - ICE {c['ice']}",
               "Bénéficiaires effectifs (détention directe ou indirecte >= 25 %) :",

@@ -1,17 +1,23 @@
 """Document catalogue and the rules that decide which documents a customer file needs.
 
-Every requirement cites the (mock) policy section that imposes it. Document codes are
+Every requirement cites the policy section that imposes it. Document codes are
 plain strings stored in company["documents_on_file"]:
 
   statuts, modele_J, attestation_fiscale, declaration_ubo   one per file
+  rapport_solvabilite                                        credit bureau report on the borrower
   bilan_<year>                                               e.g. bilan_2025
   id:<holder name>                                           CNIE or passport of a person
   registre:<entity name>                                     shareholder register of a company
+  bureau:<name>                                              credit bureau report on a shareholder
+
+Issue dates, when known, are in company["document_dates"] ({code: "YYYY-MM-DD"}).
 """
 from dataclasses import asdict, dataclass
 from datetime import date
 
-from .config import HIGH_SECRECY, LARGE_REQUEST_MAD, UBO_THRESHOLD_PCT
+from dateutil.relativedelta import relativedelta
+
+from .config import HIGH_SECRECY, LARGE_REQUEST_MAD, MODELE_J_MAX_AGE_MONTHS, UBO_THRESHOLD_PCT
 from .name_matching import similarity
 
 DOC_TYPES = {
@@ -22,6 +28,7 @@ DOC_TYPES = {
     "id_document": "CNIE or passport",
     "declaration_ubo": "Déclaration des bénéficiaires effectifs (UBO declaration)",
     "registre_actionnaires": "Shareholder register of a corporate shareholder",
+    "rapport_solvabilite": "Rapport de solvabilité (credit bureau report)",
     "other": "Other document",
 }
 NAME_MATCH = 0.85  # how close a name on an ID / register must be to the person or entity
@@ -38,8 +45,11 @@ class Requirement:
         return asdict(self)
 
 
-def document_code(doc_type: str, year: int | None = None, holder: str = "") -> str:
+def document_code(doc_type: str, year: int | None = None, holder: str = "", borrower: str = "") -> str:
     """Code stored in documents_on_file for a classified document."""
+    if doc_type == "rapport_solvabilite":
+        about_borrower = not holder.strip() or similarity(holder, borrower) >= NAME_MATCH
+        return "rapport_solvabilite" if about_borrower else f"bureau:{holder}"
     if doc_type == "bilan":
         return f"bilan_{year}" if year else "bilan_unknown_year"
     if doc_type == "id_document":
@@ -60,12 +70,13 @@ def required_documents(company: dict, as_of: date, strict: bool = True) -> list[
     """Documents the file must contain.
 
     strict=False is the short list the KYC agent has always checked (demo files).
-    strict=True adds identity documents and offshore registers; it is used by the
-    document gate that stops the pipeline for uploaded files.
+    strict=True adds identity documents, offshore registers and credit bureau reports;
+    it is used by the document gate that stops the pipeline for uploaded files.
     """
     reqs = [
         Requirement("statuts", DOC_TYPES["statuts"], "Identification of the legal entity.", "POL-KYC-01 §1"),
-        Requirement("modele_J", DOC_TYPES["modele_J"], "Recent commercial register extract.", "POL-KYC-01 §1"),
+        Requirement("modele_J", DOC_TYPES["modele_J"],
+                    f"Commercial register extract dated less than {MODELE_J_MAX_AGE_MONTHS} months.", "POL-KYC-01 §1"),
         Requirement("attestation_fiscale", DOC_TYPES["attestation_fiscale"], "Tax compliance of the entity.",
                     "POL-KYC-01 §1"),
     ]
@@ -95,6 +106,13 @@ def required_documents(company: dict, as_of: date, strict: bool = True) -> list[
                 reqs.append(Requirement(f"registre:{s['name']}", f"Shareholder register of {s['name']}",
                                         f"{s['name']} is incorporated in {HIGH_SECRECY[s['country']]}.",
                                         "POL-KYC-01 §3"))
+        reqs.append(Requirement("rapport_solvabilite", f"{DOC_TYPES['rapport_solvabilite']} on the company",
+                                "Required before granting any credit.", "POL-CRD-05 §3"))
+        # Moroccan credit bureaux only cover residents: foreign shareholders are left to the analyst
+        for s in shareholders:
+            if s.get("pct", 0) >= UBO_THRESHOLD_PCT and s.get("country") == "MA" and s.get("type") != "other":
+                reqs.append(Requirement(f"bureau:{s['name']}", f"Credit bureau report on {s['name']}",
+                                        f"Shareholder holding {s['pct']:g}%.", "POL-CRD-05 §3"))
     return reqs
 
 
@@ -105,6 +123,24 @@ def _is_present(code: str, on_file: list[str]) -> bool:
     return any(d.startswith(kind + ":") and similarity(d.split(":", 1)[1], name) >= NAME_MATCH for d in on_file)
 
 
+def modele_j_age(company: dict, as_of: date) -> tuple[str | None, bool]:
+    """(issue date, too old?) of the modèle J on file; (None, False) when the date is unknown."""
+    issued = company.get("document_dates", {}).get("modele_J")
+    if not issued:
+        return None, False
+    try:
+        return issued, date.fromisoformat(issued) < as_of - relativedelta(months=MODELE_J_MAX_AGE_MONTHS)
+    except ValueError:
+        return None, False
+
+
 def missing_documents(company: dict, as_of: date, strict: bool = True) -> list[Requirement]:
     on_file = company.get("documents_on_file", [])
-    return [r for r in required_documents(company, as_of, strict) if not _is_present(r.code, on_file)]
+    missing = [r for r in required_documents(company, as_of, strict) if not _is_present(r.code, on_file)]
+    if strict and "modele_J" in on_file:
+        issued, too_old = modele_j_age(company, as_of)
+        if too_old:
+            missing.append(Requirement("modele_J", f"Recent {DOC_TYPES['modele_J']}",
+                                       f"The extract on file is dated {issued}, more than "
+                                       f"{MODELE_J_MAX_AGE_MONTHS} months ago.", "POL-KYC-01 §1"))
+    return missing

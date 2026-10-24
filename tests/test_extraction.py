@@ -19,7 +19,7 @@ def _result(classified=(0, 1), name="FICTIONAL Test SARL") -> ex.Extraction:
     return ex.Extraction(
         company_name=name, legal_form="SARL", ice="", rc="", city="", incorporation_date="", activity="",
         sector="other", directors=[], shareholders=[], financials=[], warnings=[],
-        documents=[ex.DocumentInfo(file_index=i, doc_type="other", year=None, holder="", summary="")
+        documents=[ex.DocumentInfo(file_index=i, doc_type="other", year=None, holder="", issued="", summary="")
                    for i in classified])
 
 

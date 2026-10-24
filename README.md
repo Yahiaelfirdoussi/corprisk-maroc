@@ -1,14 +1,16 @@
 # CorpRisk Maroc — Multi-agent corporate due diligence (LangGraph)
 
-A working prototype of an agentic KYC / AML / credit due diligence system for a Moroccan bank. 
+A working prototype of an agentic KYC / AML / credit due diligence system for a Moroccan bank.
 Upload a company's documents (or pick a demo file): an LLM reads them,
 a document gate stops the pipeline if anything required is missing, then ten agents collaborate in a
 LangGraph workflow to produce an auditable risk report with policy references.
 
-> **All data is fictitious** (companies, people, ICE/RC numbers, watchlists, policies).
-> The policies are mock documents written in the spirit of law 43-05 and Bank Al-Maghrib vigilance
-> requirements; replace them with your bank's approved procedures. This is decision support:
-> final decisions, and any suspicious transaction report to the ANRF, belong to authorised staff.
+> **All data is fictitious** (companies, people, ICE/RC numbers, watchlists).
+> The policies in `policies/` separate, for each rule, the **regulatory requirement** (law 43-05, Bank
+> Al-Maghrib circulars and directives, EBA/GL/2020/06, FATF, ECB) from the bank's **internal
+> calibration** (the thresholds the code applies). They are a template: check every reference against
+> the official texts and replace the calibrations with your bank's approved ones. This is decision
+> support: final decisions, and any suspicious transaction report to the ANRF, belong to authorised staff.
 
 ## Quick start
 
@@ -39,9 +41,11 @@ In the web interface (tab **New analysis**):
    `EXTRACTION_PROVIDER`; override models with `EXTRACTION_MODEL` / `EXTRACTION_FALLBACK_MODEL`.
 3. **You review** everything in editable tables. The agents use the reviewed data, not the raw PDFs.
 4. **Document gate.** The required documents are derived from the file itself (`corprisk/documents.py`):
-   always statuts, modèle J, tax certificate and an ID for every director; two years of bilans above
-   5M MAD; a UBO declaration when a shareholder is a company or a UBO is non-resident; the shareholder
-   register of any offshore shareholder. **If anything is missing the pipeline stops** and lists each
+   always statuts, a modèle J **under 3 months old**, tax certificate, an ID for every director and a
+   **credit bureau report** on the company and on each resident shareholder holding 25% or more; two
+   years of bilans above 5M MAD; a UBO declaration when a shareholder is a company or a UBO is
+   non-resident; the shareholder register of any offshore shareholder. **If anything is missing the
+   pipeline stops** and lists each
    document with the reason and the policy section that requires it (downloadable as a request list).
 5. Otherwise the agents run and you get the score, report and, for high risk, the human review step.
 
@@ -56,7 +60,7 @@ Compliance / CNDP requirements (law 09-08) first.
 | 1b | Document gate | Checks the file is complete; stops the pipeline for uploaded files with missing documents | `agents/document_check.py`, `documents.py` |
 | 2 | Screening | Fuzzy-matches company, directors, shareholders, UBOs and counterparties against sanctions, PEP, internal blacklist, adverse media | `agents/screening.py` |
 | 3 | KYC & ownership | Identifies UBOs (≥25%, look-through), offshore structures, company age, sector risk, missing documents | `agents/kyc_ownership.py` |
-| 4 | Financial analysis | Debt/equity, current ratio, DSCR, margins, growth, exposure vs revenue | `agents/financial.py` |
+| 4 | Financial analysis | Debt/equity, current ratio, DSCR and stressed DSCR (EBITDA −20%, +200 bp), interest cover, debt/EBITDA after the financing (leveraged above 4×), margins, growth, exposure vs revenue | `agents/financial.py` |
 | 5 | Transaction monitoring | Structuring, cash intensity, turnover consistency, pass-through, high-risk jurisdictions, round amounts | `agents/transactions.py` |
 | 6 | Policy (RAG) | Links every finding to the governing internal policy section | `agents/policy.py`, `policy_rag.py` |
 | 7 | Risk scoring | Transparent score 0–100 with per-category caps; blocking issues | `agents/scoring.py` |
@@ -136,7 +140,7 @@ corprisk_maroc/
 ├── run.py · generate_data.py · generate_samples.py · requirements.txt
 ├── web/           server.py (FastAPI) + static/ (index.html, app.js, styles.css)
 ├── data/          companies.json, transactions.csv, watchlists.json, templates/   (fictitious)
-├── policies/      POL-KYC-01, POL-AML-02, POL-SAN-03, POL-CRD-04       (mock)
+├── policies/      POL-KYC-01, POL-AML-02, POL-SAN-03, POL-CRD-04, POL-CRD-05   (regulatory basis + internal calibration)
 ├── corprisk/      config, state, graph, documents, extraction, data_access, name_matching, policy_rag, llm, report
 │   └── agents/    retriever, document_check, screening, kyc_ownership, financial, transactions, policy, scoring,
 │                  escalation, reporter

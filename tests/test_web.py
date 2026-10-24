@@ -96,3 +96,18 @@ def test_password_protects_paid_endpoints(client, monkeypatch):
     ok = client.post("/api/extract", files=[("files", PDF)], headers={"X-App-Password": "fictional-secret"})
     assert ok.status_code == 200
     assert client.post("/api/demo/C001").status_code == 200   # demo stays free and open
+
+
+def test_sample_file_through_the_web_flow(client, monkeypatch):
+    from corprisk.extraction import Extraction
+    from tests.samples import SAMPLES
+    data, amount = SAMPLES["01_complete_low_risk"]
+    monkeypatch.setattr(server, "extract", _fake_extract(Extraction(**data)))
+    draft = client.post("/api/extract", files=[("files", PDF)]).json()
+    assert draft["extraction"]["documents"][1]["issued"] == "2026-10-04"
+    out = client.post("/api/run", json={"draft_id": draft["draft_id"], "extraction": draft["extraction"],
+                                        "product": "Loan", "amount_mad": amount}).json()
+    assert out["status"] == "done" and out["risk"]["level"] == "Low"
+    ratios = out["metrics"]["financial_ratios"]
+    assert ratios["interest_cover"] and ratios["debt_to_ebitda"] and ratios["stressed_dscr"]
+    assert "Stressed DSCR" in out["report_html"]

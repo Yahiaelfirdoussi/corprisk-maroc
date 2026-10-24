@@ -30,6 +30,7 @@ HIGH_SECRECY = {"VG": "British Virgin Islands", "PA": "Panama", "SC": "Seychelle
 # --- KYC (POL-KYC-01) --------------------------------------------------------
 UBO_THRESHOLD_PCT = 25
 NEW_COMPANY_MONTHS = 24
+MODELE_J_MAX_AGE_MONTHS = 3          # commercial register extract freshness
 LARGE_REQUEST_MAD = 5_000_000
 SECTOR_RISK = {  # inherent sector risk -> points
     "real_estate": ("High", 10),
@@ -47,6 +48,11 @@ MIN_CURRENT_RATIO = 1.0
 MIN_DSCR = 1.5
 UNUSUAL_GROWTH = 1.0               # +100% revenue in one year
 MAX_EXPOSURE_TO_REVENUE = 0.50
+MIN_INTEREST_COVER = 3.0           # EBITDA / interest expense
+LEVERAGED_DEBT_TO_EBITDA = 4.0     # (financial debt + request) / EBITDA: leveraged transaction
+MAX_DEBT_TO_EBITDA = 6.0           # above: outside risk appetite (Credit Committee + CRO)
+STRESS_EBITDA_CUT = 0.20           # sensitivity analysis: EBITDA -20%
+STRESS_RATE_BPS = 200              # and +200 bp on financial debt
 
 # --- Screening (POL-SAN-03) --------------------------------------------------
 PROBABLE_MATCH = 0.90

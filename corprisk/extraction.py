@@ -30,7 +30,7 @@ FALLBACK_MODELS = {"claude-fable-5-1", "claude-opus-5-5", "claude-opus-5", "clau
 MEDIA_TYPES = {"pdf": "application/pdf", "png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg"}
 
 DocType = Literal["statuts", "modele_J", "attestation_fiscale", "bilan", "id_document", "declaration_ubo",
-                  "registre_actionnaires", "other"]
+                  "registre_actionnaires", "rapport_solvabilite", "other"]
 Sector = Literal[tuple(SECTOR_RISK) + ("other",)]  # type: ignore[valid-type]
 
 
@@ -38,8 +38,10 @@ class DocumentInfo(BaseModel):
     file_index: int = Field(description="Index of the file, as given in the file list")
     doc_type: DocType
     year: int | None = Field(description="Fiscal year for a bilan, otherwise null")
-    holder: str = Field(description="Person named on an ID document, or company whose shareholder register "
-                                    "this is; empty string otherwise")
+    holder: str = Field(description="Person named on an ID document, company whose shareholder register this "
+                                    "is, or person/company a credit bureau report is about; empty string otherwise")
+    issued: str = Field(description="Date the document was issued or delivered (e.g. modèle J extract date, "
+                                    "certificate date), YYYY-MM-DD; empty string if not stated")
     summary: str = Field(description="One short line describing the document")
 
 
@@ -76,6 +78,9 @@ class FinancialYear(BaseModel):
     current_liabilities: float | None = Field(description="Passif circulant + trésorerie passif, MAD")
     annual_debt_service: float | None = Field(description="Interest expense plus loan principal repaid in "
                                                           "the year, MAD; null if not determinable")
+    interest_expense: float | None = Field(description="Charges d'intérêts, MAD")
+    financial_debt: float | None = Field(description="Dettes de financement + trésorerie passif (bank "
+                                                     "overdrafts), MAD")
 
 
 class Extraction(BaseModel):
@@ -95,7 +100,8 @@ class Extraction(BaseModel):
 
 
 SYSTEM_PROMPT = """You are a KYC analyst at a Moroccan bank. You receive the documents of a corporate \
-customer file (statuts, modèle J, bilans, tax certificate, identity documents, UBO declarations...), \
+customer file (statuts, modèle J, bilans, tax certificate, identity documents, UBO declarations, \
+credit bureau reports...), \
 in French, Arabic or English, sometimes scanned.
 
 1. Classify every file (one `documents` entry per file, using the file index you are given).
@@ -306,10 +312,13 @@ def extract(files: list[UploadedFile]) -> tuple[Extraction, str]:
 def to_company(ex: Extraction, files: list[str], requested_product: str, requested_amount_mad: int,
                company_id: str | None = None) -> dict:
     """Build the customer file the agents expect from a (reviewed) extraction."""
-    docs = []
+    docs, dates = [], {}
     for d in ex.documents:
         if d.doc_type != "other":
-            docs.append(document_code(d.doc_type, d.year, d.holder))
+            code = document_code(d.doc_type, d.year, d.holder, borrower=ex.company_name)
+            docs.append(code)
+            if d.issued:
+                dates[code] = max(d.issued, dates.get(code, ""))  # several copies: keep the latest
     sector_label = ex.activity or ex.sector.replace("_", " ")
     return {
         "company_id": company_id or f"UPL-{date.today():%Y%m%d}",
@@ -327,5 +336,6 @@ def to_company(ex: Extraction, files: list[str], requested_product: str, request
         "shareholders": [s.model_dump() for s in ex.shareholders],
         "financials": {str(f.year): f.model_dump(exclude={"year"}) for f in ex.financials},
         "documents_on_file": sorted(set(docs)),
+        "document_dates": dates,
         "source_files": files,
     }
